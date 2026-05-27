@@ -62,7 +62,7 @@ jobs:
       - name: Build project
         run: |
           mkdir -p out/release/HTML5
-          ./godot.exec --export-release "Web" out/release/HTML5/index.html --no-window --quit
+          ./godot.exec --export-release "Web" out/release/HTML5/index.html --headless --quit
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
