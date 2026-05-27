@@ -54,9 +54,9 @@ jobs:
         if: steps.cache-godot.outputs.cache-hit != 'true'
         run: |
           wget --no-verbose https://github.com/godotengine/godot/releases/download/4.6.3-stable/Godot_v4.6.3-stable_export_templates.tpz
-          mkdir -p ~/.local/share/godot/templates/4.6.3.stable
+          mkdir -p ~/.local/share/godot/export_templates/4.6.3.stable
           unzip Godot_v4.6.3-stable_export_templates.tpz -d temp_templates
-          mv temp_templates/templates/* ~/.local/share/godot/templates/4.6.3.stable/
+          mv temp_templates/templates/* ~/.local/share/godot/export_templates/4.6.3.stable/
           rm -rf temp_templates Godot_v4.6.3-stable_export_templates.tpz
 
       - name: Build project
