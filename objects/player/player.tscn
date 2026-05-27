@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://ccldhoc0ddoi3"]
+
+[ext_resource type="Script" uid="uid://hdwdfx72whs2" path="res://objects/player/player.gd" id="1_cqmt1"]
+[ext_resource type="Texture2D" uid="uid://dnt13iy3bhjcf" path="res://objects/player/player.png" id="2_g7ett"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g7ett"]
+size = Vector2(22, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ssrue"]
+atlas = ExtResource("2_g7ett")
+region = Rect2(0, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jnjyq"]
+atlas = ExtResource("2_g7ett")
+region = Rect2(33, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gnkmh"]
+atlas = ExtResource("2_g7ett")
+region = Rect2(66, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xkryw"]
+atlas = ExtResource("2_g7ett")
+region = Rect2(99, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ow0dq"]
+atlas = ExtResource("2_g7ett")
+region = Rect2(132, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4kly"]
+atlas = ExtResource("2_g7ett")
+region = Rect2(165, 0, 33, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xgwla"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ssrue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jnjyq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gnkmh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xkryw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ow0dq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4kly")
+}],
+"loop": true,
+"name": &"move",
+"speed": 8.0
+}]
+
+[node name="Player" type="CharacterBody2D" unique_id=98190796]
+script = ExtResource("1_cqmt1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=272593210]
+position = Vector2(-1, 5)
+shape = SubResource("RectangleShape2D_g7ett")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2024261281]
+sprite_frames = SubResource("SpriteFrames_xgwla")
+animation = &"move"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=277488481]
+zoom = Vector2(2, 2)

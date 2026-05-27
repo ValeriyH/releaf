@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://f8lmovipury"]
+
+[ext_resource type="PackedScene" uid="uid://ccldhoc0ddoi3" path="res://objects/player/player.tscn" id="1_5jv1i"]
+[ext_resource type="PackedScene" uid="uid://dol686rwoywed" path="res://objects/fire/fire.tscn" id="3_ccd7m"]
+[ext_resource type="PackedScene" uid="uid://bxuoyn3b1m0m" path="res://objects/tree/tree.tscn" id="3_e68cy"]
+
+[node name="World" type="Node2D" unique_id=1108878015]
+
+[node name="Player" parent="." unique_id=1758493109 instance=ExtResource("1_5jv1i")]
+
+[node name="Enemies" type="Node2D" parent="." unique_id=825268297]
+
+[node name="Fire1" parent="Enemies" unique_id=1043966430 instance=ExtResource("3_ccd7m")]
+position = Vector2(442, 69)
+
+[node name="Fire2" parent="Enemies" unique_id=1706544851 instance=ExtResource("3_ccd7m")]
+position = Vector2(327, 302)
+
+[node name="Fire3" parent="Enemies" unique_id=945180067 instance=ExtResource("3_ccd7m")]
+position = Vector2(51, 333)
+
+[node name="Fire4" parent="Enemies" unique_id=1834415221 instance=ExtResource("3_ccd7m")]
+position = Vector2(522, 228)
+
+[node name="Fire5" parent="Enemies" unique_id=890790651 instance=ExtResource("3_ccd7m")]
+position = Vector2(127, 126)
+
+[node name="Nature" type="Node2D" parent="." unique_id=2071717748]
+
+[node name="Tree4" parent="Nature" unique_id=413182154 instance=ExtResource("3_e68cy")]
+
+[node name="Tree" parent="Nature" unique_id=747391514 instance=ExtResource("3_e68cy")]
+position = Vector2(492, 1)
+
+[node name="Tree2" parent="Nature" unique_id=770564349 instance=ExtResource("3_e68cy")]
+position = Vector2(-98, 214)
+
+[node name="Tree3" parent="Nature" unique_id=1419704173 instance=ExtResource("3_e68cy")]
+position = Vector2(223, -6)
+
+[node name="Tree5" parent="Nature" unique_id=1031709671 instance=ExtResource("3_e68cy")]
+position = Vector2(236, 280)
