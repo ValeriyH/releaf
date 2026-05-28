@@ -39,7 +39,7 @@ jobs:
         with:
           path: |
             ./godot.exec
-            ~/.local/share/godot/templates/4.6.3.stable
+            ~/.local/share/godot/export_templates/4.6.3.stable/
           key: ${{ runner.os }}-godot-4.6.3-stable
 
       - name: Download Godot 4.6.3
