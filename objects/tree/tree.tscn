@@ -1,14 +1,16 @@
 [gd_scene format=3 uid="uid://bxuoyn3b1m0m"]
 
 [ext_resource type="Script" uid="uid://cgvr81minxmd6" path="res://objects/tree/tree.gd" id="1_olndm"]
-[ext_resource type="Texture2D" uid="uid://cfem2o7eg1jia" path="res://objects/tree/tree1.tres" id="2_weuwi"]
+[ext_resource type="Texture2D" uid="uid://oqbcaxxguioc" path="res://objects/tree/tree2.tres" id="2_weuwi"]
 [ext_resource type="Texture2D" uid="uid://1jos0iy0iwf1" path="res://objects/tree/root.tres" id="3_weuwi"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_olndm"]
-size = Vector2(30, 24)
+[sub_resource type="CircleShape2D" id="CircleShape2D_albtw"]
+radius = 17.06044
 
 [node name="Tree" type="StaticBody2D" unique_id=413182154]
+rotation = -0.022244822
 script = ExtResource("1_olndm")
+crown_index = 1
 
 [node name="Crown" type="Sprite2D" parent="." unique_id=540769115]
 z_index = 2
@@ -19,5 +21,5 @@ texture = ExtResource("2_weuwi")
 texture = ExtResource("3_weuwi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1094354473]
-position = Vector2(2, -2)
-shape = SubResource("RectangleShape2D_olndm")
+position = Vector2(0.055668473, -1.999225)
+shape = SubResource("CircleShape2D_albtw")

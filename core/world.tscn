@@ -1,10 +1,13 @@
 [gd_scene format=3 uid="uid://f8lmovipury"]
 
 [ext_resource type="PackedScene" uid="uid://ccldhoc0ddoi3" path="res://objects/player/player.tscn" id="1_5jv1i"]
+[ext_resource type="Script" uid="uid://cfjww40ao1pa0" path="res://core/world.gd" id="1_wd0q5"]
 [ext_resource type="PackedScene" uid="uid://dol686rwoywed" path="res://objects/fire/fire.tscn" id="3_ccd7m"]
 [ext_resource type="PackedScene" uid="uid://bxuoyn3b1m0m" path="res://objects/tree/tree.tscn" id="3_e68cy"]
+[ext_resource type="PackedScene" uid="uid://cwhcn1mgj5p3n" path="res://objects/stone/stone.tscn" id="4_e68cy"]
 
 [node name="World" type="Node2D" unique_id=1108878015]
+script = ExtResource("1_wd0q5")
 
 [node name="Player" parent="." unique_id=1758493109 instance=ExtResource("1_5jv1i")]
 
@@ -27,16 +30,56 @@ position = Vector2(127, 126)
 
 [node name="Nature" type="Node2D" parent="." unique_id=2071717748]
 
-[node name="Tree4" parent="Nature" unique_id=413182154 instance=ExtResource("3_e68cy")]
-
 [node name="Tree" parent="Nature" unique_id=747391514 instance=ExtResource("3_e68cy")]
 position = Vector2(492, 1)
+rotation = 0.03446055
+
+[node name="Tree4" parent="Nature" unique_id=413182154 instance=ExtResource("3_e68cy")]
+position = Vector2(-140, -49)
+rotation = 0.03446055
+crown_index = 0
 
 [node name="Tree2" parent="Nature" unique_id=770564349 instance=ExtResource("3_e68cy")]
 position = Vector2(-98, 214)
+rotation = 0.03446055
 
 [node name="Tree3" parent="Nature" unique_id=1419704173 instance=ExtResource("3_e68cy")]
 position = Vector2(223, -6)
+rotation = 0.03446055
 
 [node name="Tree5" parent="Nature" unique_id=1031709671 instance=ExtResource("3_e68cy")]
 position = Vector2(236, 280)
+rotation = 0.03446055
+
+[node name="Stone" parent="Nature" unique_id=1537947566 instance=ExtResource("4_e68cy")]
+position = Vector2(10, -79)
+
+[node name="Stone2" parent="Nature" unique_id=784351681 instance=ExtResource("4_e68cy")]
+position = Vector2(-351, 80)
+
+[node name="Stone3" parent="Nature" unique_id=554866132 instance=ExtResource("4_e68cy")]
+position = Vector2(357, 26)
+
+[node name="Stone4" parent="Nature" unique_id=186935654 instance=ExtResource("4_e68cy")]
+position = Vector2(425, 246)
+
+[node name="Stone5" parent="Nature" unique_id=337742790 instance=ExtResource("4_e68cy")]
+position = Vector2(-373, 248)
+stone_index = 1
+
+[node name="Stone6" parent="Nature" unique_id=1586706787 instance=ExtResource("4_e68cy")]
+position = Vector2(260, -167)
+stone_index = 1
+
+[node name="Stone7" parent="Nature" unique_id=1460444760 instance=ExtResource("4_e68cy")]
+position = Vector2(-271, -85)
+stone_index = 1
+
+[node name="Stone8" parent="Nature" unique_id=2020561437 instance=ExtResource("4_e68cy")]
+position = Vector2(-115, 355)
+stone_index = 1
+
+[node name="Stone9" parent="Nature" unique_id=1443111703 instance=ExtResource("4_e68cy")]
+position = Vector2(205, 76)
+
+[node name="Items" type="Node2D" parent="." unique_id=77033107]
