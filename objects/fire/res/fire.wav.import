@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://ct8cw0lmaslli"
-path="res://.godot/imported/burn.wav-4983d495cee19b17be39fa53c9581fdb.sample"
+uid="uid://b1mssujqrp7hb"
+path="res://.godot/imported/fire.wav-02bf9f54dd550cfd18e916cf1f15d39d.sample"
 
 [deps]
 
-source_file="res://objects/fire/burn.wav"
-dest_files=["res://.godot/imported/burn.wav-4983d495cee19b17be39fa53c9581fdb.sample"]
+source_file="res://objects/fire/res/fire.wav"
+dest_files=["res://.godot/imported/fire.wav-02bf9f54dd550cfd18e916cf1f15d39d.sample"]
 
 [params]
 

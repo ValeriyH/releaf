@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dol686rwoywed"]
 
 [ext_resource type="Script" uid="uid://b8anbt0l1sniv" path="res://objects/fire/fire.gd" id="1_rlj04"]
-[ext_resource type="Texture2D" uid="uid://boy2i8lbqm8rk" path="res://objects/fire/fire.png" id="2_i54m5"]
-[ext_resource type="AudioStream" uid="uid://b1mssujqrp7hb" path="res://objects/fire/fire.wav" id="3_i54m5"]
-[ext_resource type="AudioStream" uid="uid://ct8cw0lmaslli" path="res://objects/fire/burn.wav" id="4_dm2o4"]
+[ext_resource type="Texture2D" uid="uid://boy2i8lbqm8rk" path="res://objects/fire/res/fire.png" id="2_i54m5"]
+[ext_resource type="AudioStream" uid="uid://b1mssujqrp7hb" path="res://objects/fire/res/fire.wav" id="3_i54m5"]
+[ext_resource type="AudioStream" uid="uid://ct8cw0lmaslli" path="res://objects/fire/res/burn.wav" id="4_dm2o4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dm2o4"]
 radius = 45.65085
@@ -65,13 +65,12 @@ frame = 64
 position = Vector2(-1, 11)
 collision_layer = 0
 collision_mask = 2
-monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=2106070293]
+[node name="BurnRadius" type="CollisionShape2D" parent="Hitbox" unique_id=2106070293]
 position = Vector2(1, -11)
 shape = SubResource("CircleShape2D_dm2o4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=638270495]
+[node name="CollisionRadius" type="CollisionShape2D" parent="." unique_id=638270495]
 shape = SubResource("CircleShape2D_eu1pf")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1297608156]
@@ -92,6 +91,7 @@ autoplay = true
 stream = ExtResource("4_dm2o4")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="HungryTimer" to="." method="_on_HungryTimer_timeout"]
 [connection signal="timeout" from="MoveTimer" to="." method="_on_Timer_timeout"]
 [connection signal="finished" from="Audio" to="." method="_on_Audio_finished"]

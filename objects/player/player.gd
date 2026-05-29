@@ -1,10 +1,10 @@
 extends CharacterBody2D
+class_name Player
 
-var base_speed = 200
-var direction : Vector2 = Vector2()
+var base_speed: = 200
+var direction: Vector2 = Vector2()
 
 func _input(event: InputEvent) -> void:
-	
 	if (event is not InputEventKey):
 		return
 	
@@ -22,7 +22,8 @@ func _input(event: InputEvent) -> void:
 		direction = direction.normalized() * base_speed
 
 func _process(delta: float) -> void:
-	
-	var collision  = move_and_collide(direction * delta)
-		#if collision:
-		#	check_collision(collision)	
+	move_and_collide(direction * delta)
+
+func on_action_box_body_entered(_body: Node2D) -> void:
+	#print("Player area " + body.name)
+	pass

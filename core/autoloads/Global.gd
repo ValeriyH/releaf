@@ -1,29 +1,22 @@
 extends Node
 
-enum LayerBit {
-	OBJECT = 0,
-	FIREABLE = 1,
-	TREE = 2,
-	ITEM = 3,
-	STONE = 4,
-	WATER = 5
+enum Layer {
+	OBSTACLE = 1, #stones, water, etc. Can't be burn
+	FIREABLE = 2, #items, trees, user and other object what can be burn
+	ITEM = 3, #consumable and pickable items
+	TREE = 4,
+	STONE = 5,
+	WATER = 6
 }
 
-enum Layers {
-	OBJECT = 0b1,
+enum LayerMask {
+	OBSTACLE = 0b1,
 	FIREABLE = 0b10,
-	TREE = 0b100,
-	ITEM = 0b1000,
+	ITEM = 0b100,
+	TREE = 0b1000,
 	STONE = 0b10000,
 	WATER = 0b100000
 }
 
-enum Items {
-	Seed,
-	Heart,
-	IceCream,
-	Extinguisher
-}
-
-func _ready():
+func _ready() -> void:
 	pass

@@ -18,6 +18,8 @@ func _init(p_initiator: Node, p_callback: Callable) -> void:
 	
 func set_completed(command_status :ExecutionStatus = ExecutionStatus.SUCCESS,
  command_message: String = "") -> void:
+	if status != ExecutionStatus.PENDING:
+		printerr("ERROR: COMPLETE ALREADY COMPLETED CONTEXT")
 	self.status = command_status
 	self.message = command_message
 	# Automatically fire the callback if it exists!

@@ -7,11 +7,11 @@ extends StaticBody2D
 		if is_node_ready():
 			$Sprite2D.texture = stones[stone_index]
 	
-var stones = [
+var stones: = [
 	preload("res://objects/stone/stone1.tres"),
 	preload("res://objects/stone/stone2.tres")
 	]
 
 func _ready() -> void:
-	var index = randi_range(0, stones.size() -1)
+	var index: = randi() % stones.size()
 	stone_index = index

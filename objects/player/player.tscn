@@ -56,8 +56,12 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g7ett"]
+size = Vector2(13, 25)
+
 [node name="Player" type="CharacterBody2D" unique_id=98190796]
 z_index = 1
+collision_layer = 3
 script = ExtResource("1_cqmt1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=272593210]
@@ -70,3 +74,13 @@ animation = &"move"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=277488481]
 zoom = Vector2(2, 2)
+
+[node name="ActionBox" type="Area2D" parent="." unique_id=1623332518]
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActionBox" unique_id=2096711947]
+position = Vector2(17.5, 5)
+shape = SubResource("RectangleShape2D_g7ett")
+
+[connection signal="body_entered" from="ActionBox" to="." method="on_action_box_body_entered"]

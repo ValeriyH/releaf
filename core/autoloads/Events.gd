@@ -9,4 +9,7 @@ signal plant_tree_processed(result: PlantTreeContext)
 signal item_destroy_command(command: ItemDestroyContext)
 signal item_destroy_processed(result: ItemDestroyContext)
 
+signal burn_command(command: BurnContext)
+signal burn_processed(result: BurnContext)
+
 #Event signals

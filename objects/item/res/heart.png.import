@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blfoyjspaybi7"
-path="res://.godot/imported/icecream.png-c1bd7946ac50695d80fe4e75e2f765bf.ctex"
+uid="uid://8y24f7jue73k"
+path="res://.godot/imported/heart.png-4f1c3dc06e04ec16c70db5bd74d886aa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://objects/item/img/icecream.png"
-dest_files=["res://.godot/imported/icecream.png-c1bd7946ac50695d80fe4e75e2f765bf.ctex"]
+source_file="res://objects/item/res/heart.png"
+dest_files=["res://.godot/imported/heart.png-4f1c3dc06e04ec16c70db5bd74d886aa.ctex"]
 
 [params]
 

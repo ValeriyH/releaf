@@ -10,6 +10,7 @@
 script = ExtResource("1_wd0q5")
 
 [node name="Player" parent="." unique_id=1758493109 instance=ExtResource("1_5jv1i")]
+position = Vector2(-45, 12)
 
 [node name="Enemies" type="Node2D" parent="." unique_id=825268297]
 
@@ -20,39 +21,47 @@ position = Vector2(442, 69)
 position = Vector2(327, 302)
 
 [node name="Fire3" parent="Enemies" unique_id=945180067 instance=ExtResource("3_ccd7m")]
-position = Vector2(51, 333)
+position = Vector2(-281, -51)
 
 [node name="Fire4" parent="Enemies" unique_id=1834415221 instance=ExtResource("3_ccd7m")]
 position = Vector2(522, 228)
 
 [node name="Fire5" parent="Enemies" unique_id=890790651 instance=ExtResource("3_ccd7m")]
-position = Vector2(127, 126)
+position = Vector2(27, 179)
 
 [node name="Nature" type="Node2D" parent="." unique_id=2071717748]
 
+[node name="Tree6" parent="Nature" unique_id=413182154 instance=ExtResource("3_e68cy")]
+position = Vector2(-237, 103)
+rotation = 0.031705856
+scale = Vector2(0.99999994, 0.99999994)
+crown_index = 1
+
 [node name="Tree" parent="Nature" unique_id=747391514 instance=ExtResource("3_e68cy")]
 position = Vector2(492, 1)
-rotation = 0.03446055
+rotation = 0.031705856
+crown_index = 1
 
-[node name="Tree4" parent="Nature" unique_id=413182154 instance=ExtResource("3_e68cy")]
+[node name="Tree4" parent="Nature" unique_id=1777314844 instance=ExtResource("3_e68cy")]
 position = Vector2(-140, -49)
-rotation = 0.03446055
-crown_index = 0
+rotation = 0.031705856
 
 [node name="Tree2" parent="Nature" unique_id=770564349 instance=ExtResource("3_e68cy")]
 position = Vector2(-98, 214)
-rotation = 0.03446055
+rotation = 0.031705856
+crown_index = 1
 
 [node name="Tree3" parent="Nature" unique_id=1419704173 instance=ExtResource("3_e68cy")]
 position = Vector2(223, -6)
-rotation = 0.03446055
+rotation = 0.031705856
+crown_index = 1
 
 [node name="Tree5" parent="Nature" unique_id=1031709671 instance=ExtResource("3_e68cy")]
-position = Vector2(236, 280)
-rotation = 0.03446055
+position = Vector2(124, 291)
+rotation = 0.031705856
 
 [node name="Stone" parent="Nature" unique_id=1537947566 instance=ExtResource("4_e68cy")]
-position = Vector2(10, -79)
+position = Vector2(-22, -103)
 
 [node name="Stone2" parent="Nature" unique_id=784351681 instance=ExtResource("4_e68cy")]
 position = Vector2(-351, 80)
@@ -62,6 +71,7 @@ position = Vector2(357, 26)
 
 [node name="Stone4" parent="Nature" unique_id=186935654 instance=ExtResource("4_e68cy")]
 position = Vector2(425, 246)
+stone_index = 1
 
 [node name="Stone5" parent="Nature" unique_id=337742790 instance=ExtResource("4_e68cy")]
 position = Vector2(-373, 248)
@@ -69,17 +79,31 @@ stone_index = 1
 
 [node name="Stone6" parent="Nature" unique_id=1586706787 instance=ExtResource("4_e68cy")]
 position = Vector2(260, -167)
-stone_index = 1
 
 [node name="Stone7" parent="Nature" unique_id=1460444760 instance=ExtResource("4_e68cy")]
 position = Vector2(-271, -85)
-stone_index = 1
 
 [node name="Stone8" parent="Nature" unique_id=2020561437 instance=ExtResource("4_e68cy")]
 position = Vector2(-115, 355)
-stone_index = 1
 
 [node name="Stone9" parent="Nature" unique_id=1443111703 instance=ExtResource("4_e68cy")]
 position = Vector2(205, 76)
+stone_index = 1
+
+[node name="Tree7" parent="Nature" unique_id=1011003658 instance=ExtResource("3_e68cy")]
+position = Vector2(65, -23.999985)
+rotation = 0.031705856
+
+[node name="Tree8" parent="Nature" unique_id=801266458 instance=ExtResource("3_e68cy")]
+position = Vector2(273.99997, 184)
+rotation = 0.031705856
 
 [node name="Items" type="Node2D" parent="." unique_id=77033107]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=45847252]
+z_index = -10
+offset_left = -800.0
+offset_top = -480.0
+offset_right = 800.0
+offset_bottom = 480.0
+color = Color(0.2077303, 0.31993493, 0.2852492, 1)

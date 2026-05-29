@@ -1,14 +1,35 @@
 [gd_scene format=3 uid="uid://bxuoyn3b1m0m"]
 
 [ext_resource type="Script" uid="uid://cgvr81minxmd6" path="res://objects/tree/tree.gd" id="1_olndm"]
-[ext_resource type="Texture2D" uid="uid://oqbcaxxguioc" path="res://objects/tree/tree2.tres" id="2_weuwi"]
-[ext_resource type="Texture2D" uid="uid://1jos0iy0iwf1" path="res://objects/tree/root.tres" id="3_weuwi"]
+[ext_resource type="Texture2D" uid="uid://oqbcaxxguioc" path="res://objects/tree/res/tree2.tres" id="2_weuwi"]
+[ext_resource type="Texture2D" uid="uid://1jos0iy0iwf1" path="res://objects/tree/res/root.tres" id="3_weuwi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_albtw"]
 radius = 17.06044
 
+[sub_resource type="Gradient" id="Gradient_weuwi"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_albtw"]
+gradient = SubResource("Gradient_weuwi")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Curve" id="Curve_albtw"]
+_data = [Vector2(0.0038240924, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0028408766), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_jc7sr"]
+offsets = PackedFloat32Array(0, 0.4, 0.8, 1)
+colors = PackedColorArray(1, 1, 0.5529412, 1, 0.9372549, 0.44705883, 0.08235294, 1, 0.7294118, 0, 0.039215688, 1, 0.11764706, 0.11764706, 0.11764706, 1)
+metadata/_snap_enabled = true
+
 [node name="Tree" type="StaticBody2D" unique_id=413182154]
-rotation = -0.022244822
+rotation = -0.01862666
+collision_layer = 3
+collision_mask = 0
 script = ExtResource("1_olndm")
 crown_index = 1
 
@@ -21,5 +42,24 @@ texture = ExtResource("2_weuwi")
 texture = ExtResource("3_weuwi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1094354473]
-position = Vector2(0.055668473, -1.999225)
+position = Vector2(-1.011285, 0.9885868)
 shape = SubResource("CircleShape2D_albtw")
+
+[node name="FireParticles" type="CPUParticles2D" parent="." unique_id=577892595]
+z_index = 2
+position = Vector2(-0.43337262, -45.997963)
+emitting = false
+amount = 100
+texture = SubResource("GradientTexture2D_albtw")
+lifetime = 0.5
+preprocess = 0.8
+explosiveness = 0.7
+emission_shape = 3
+emission_rect_extents = Vector2(32, 48)
+direction = Vector2(0, -1)
+spread = 15.0
+gravity = Vector2(0, -100)
+initial_velocity_min = 40.0
+initial_velocity_max = 80.0
+scale_amount_curve = SubResource("Curve_albtw")
+color_ramp = SubResource("Gradient_jc7sr")
