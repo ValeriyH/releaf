@@ -64,7 +64,8 @@ ui_down={
 
 2d_physics/layer_1="obstacle"
 2d_physics/layer_2="fireable"
-2d_physics/layer_3="items"
+2d_physics/layer_3="item"
+2d_physics/layer_4="fire"
 
 [physics]
 

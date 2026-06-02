@@ -1,17 +1,18 @@
 [gd_scene format=3 uid="uid://cwhcn1mgj5p3n"]
 
-[ext_resource type="Texture2D" uid="uid://ntuhhwibppc6" path="res://objects/stone/stone1.tres" id="1_gk8i1"]
 [ext_resource type="Script" uid="uid://4ujostr1tyau" path="res://objects/stone/stone.gd" id="1_jg0gd"]
+[ext_resource type="Texture2D" uid="uid://wqba4x16gdst" path="res://objects/stone/stone2.tres" id="2_jg0gd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jg0gd"]
-radius = 19.026299
+radius = 14.035668
 
 [node name="Stone" type="StaticBody2D" unique_id=1537947566]
 collision_mask = 0
 script = ExtResource("1_jg0gd")
+stone_index = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2130064660]
-texture = ExtResource("1_gk8i1")
+texture = ExtResource("2_jg0gd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=560113555]
 position = Vector2(0, 1)

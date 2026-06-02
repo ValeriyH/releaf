@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://1jos0iy0iwf1" path="res://objects/tree/res/root.tres" id="3_weuwi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_albtw"]
-radius = 17.06044
+radius = 13.147946
 
 [sub_resource type="Gradient" id="Gradient_weuwi"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -27,7 +27,7 @@ colors = PackedColorArray(1, 1, 0.5529412, 1, 0.9372549, 0.44705883, 0.08235294,
 metadata/_snap_enabled = true
 
 [node name="Tree" type="StaticBody2D" unique_id=413182154]
-rotation = -0.01862666
+rotation = -0.015526917
 collision_layer = 3
 collision_mask = 0
 script = ExtResource("1_olndm")
@@ -42,7 +42,7 @@ texture = ExtResource("2_weuwi")
 texture = ExtResource("3_weuwi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1094354473]
-position = Vector2(-1.011285, 0.9885868)
+position = Vector2(0.033414755, -0.9994416)
 shape = SubResource("CircleShape2D_albtw")
 
 [node name="FireParticles" type="CPUParticles2D" parent="." unique_id=577892595]

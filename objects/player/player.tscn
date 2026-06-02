@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://dnt13iy3bhjcf" path="res://objects/player/player.png" id="2_g7ett"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g7ett"]
-radius = 15.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ssrue"]
 atlas = ExtResource("2_g7ett")
@@ -57,7 +56,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g7ett"]
-size = Vector2(13, 25)
+size = Vector2(12.85, 26.5)
 
 [node name="Player" type="CharacterBody2D" unique_id=98190796]
 z_index = 1
@@ -65,10 +64,10 @@ collision_layer = 3
 script = ExtResource("1_cqmt1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=272593210]
-position = Vector2(-1, 4)
 shape = SubResource("CircleShape2D_g7ett")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2024261281]
+position = Vector2(1, -4)
 sprite_frames = SubResource("SpriteFrames_xgwla")
 animation = &"move"
 
@@ -76,11 +75,13 @@ animation = &"move"
 zoom = Vector2(2, 2)
 
 [node name="ActionBox" type="Area2D" parent="." unique_id=1623332518]
-collision_layer = 2
-collision_mask = 7
+position = Vector2(14, 0)
+scale = Vector2(2.2, 1)
+collision_layer = 0
+collision_mask = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActionBox" unique_id=2096711947]
-position = Vector2(17.5, 5)
 shape = SubResource("RectangleShape2D_g7ett")
 
+[connection signal="area_entered" from="ActionBox" to="." method="on_action_box_body_entered"]
 [connection signal="body_entered" from="ActionBox" to="." method="on_action_box_body_entered"]

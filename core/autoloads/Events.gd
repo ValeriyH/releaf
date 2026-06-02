@@ -12,4 +12,7 @@ signal item_destroy_processed(result: ItemDestroyContext)
 signal burn_command(command: BurnContext)
 signal burn_processed(result: BurnContext)
 
+signal pick_item_command(command: PickItemContext)
+signal pick_item_processed(result: PickItemContext)
+
 #Event signals

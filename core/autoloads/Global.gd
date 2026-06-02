@@ -13,9 +13,9 @@ enum LayerMask {
 	OBSTACLE = 0b1,
 	FIREABLE = 0b10,
 	ITEM = 0b100,
-	TREE = 0b1000,
-	STONE = 0b10000,
-	WATER = 0b100000
+	FIRE = 0b1000,
+	OLD_STONE = 0b10000,
+	OLD_WATER = 0b100000
 }
 
 func _ready() -> void:

@@ -33,32 +33,33 @@ position = Vector2(27, 179)
 
 [node name="Tree6" parent="Nature" unique_id=413182154 instance=ExtResource("3_e68cy")]
 position = Vector2(-237, 103)
-rotation = 0.031705856
+rotation = 0.022657434
 scale = Vector2(0.99999994, 0.99999994)
-crown_index = 1
+crown_index = 0
 
 [node name="Tree" parent="Nature" unique_id=747391514 instance=ExtResource("3_e68cy")]
 position = Vector2(492, 1)
-rotation = 0.031705856
-crown_index = 1
+rotation = 0.022657434
+crown_index = 0
 
 [node name="Tree4" parent="Nature" unique_id=1777314844 instance=ExtResource("3_e68cy")]
 position = Vector2(-140, -49)
-rotation = 0.031705856
+rotation = 0.022657434
+crown_index = 0
 
 [node name="Tree2" parent="Nature" unique_id=770564349 instance=ExtResource("3_e68cy")]
 position = Vector2(-98, 214)
-rotation = 0.031705856
-crown_index = 1
+rotation = 0.022657434
+crown_index = 0
 
 [node name="Tree3" parent="Nature" unique_id=1419704173 instance=ExtResource("3_e68cy")]
 position = Vector2(223, -6)
-rotation = 0.031705856
-crown_index = 1
+rotation = 0.022657434
 
 [node name="Tree5" parent="Nature" unique_id=1031709671 instance=ExtResource("3_e68cy")]
 position = Vector2(124, 291)
-rotation = 0.031705856
+rotation = 0.022657434
+crown_index = 0
 
 [node name="Stone" parent="Nature" unique_id=1537947566 instance=ExtResource("4_e68cy")]
 position = Vector2(-22, -103)
@@ -71,32 +72,34 @@ position = Vector2(357, 26)
 
 [node name="Stone4" parent="Nature" unique_id=186935654 instance=ExtResource("4_e68cy")]
 position = Vector2(425, 246)
-stone_index = 1
 
 [node name="Stone5" parent="Nature" unique_id=337742790 instance=ExtResource("4_e68cy")]
 position = Vector2(-373, 248)
-stone_index = 1
+stone_index = 0
 
 [node name="Stone6" parent="Nature" unique_id=1586706787 instance=ExtResource("4_e68cy")]
 position = Vector2(260, -167)
 
 [node name="Stone7" parent="Nature" unique_id=1460444760 instance=ExtResource("4_e68cy")]
 position = Vector2(-271, -85)
+stone_index = 0
 
 [node name="Stone8" parent="Nature" unique_id=2020561437 instance=ExtResource("4_e68cy")]
 position = Vector2(-115, 355)
 
 [node name="Stone9" parent="Nature" unique_id=1443111703 instance=ExtResource("4_e68cy")]
 position = Vector2(205, 76)
-stone_index = 1
+stone_index = 0
 
 [node name="Tree7" parent="Nature" unique_id=1011003658 instance=ExtResource("3_e68cy")]
 position = Vector2(65, -23.999985)
-rotation = 0.031705856
+rotation = 0.022657434
+crown_index = 0
 
 [node name="Tree8" parent="Nature" unique_id=801266458 instance=ExtResource("3_e68cy")]
 position = Vector2(273.99997, 184)
-rotation = 0.031705856
+rotation = 0.022657434
+crown_index = 0
 
 [node name="Items" type="Node2D" parent="." unique_id=77033107]
 
