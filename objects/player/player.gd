@@ -7,6 +7,7 @@ var direction: Vector2 = Vector2()
 func _ready() -> void:
 	Events.burn_command.connect(on_burn)
 	Events.pick_item_processed.connect(on_pick_item)
+	Events.plant_tree_processed.connect(on_plant_tree)
 
 func _input(event: InputEvent) -> void:
 	if (event is not InputEventKey):
@@ -16,6 +17,11 @@ func _input(event: InputEvent) -> void:
 		Input.get_axis("ui_left", "ui_right"),
 		Input.get_axis("ui_up", "ui_down")
 	)
+	
+	if event.is_action_pressed("ui_accept"):
+		var pos: Vector2 = $ActionBox/Sprite2D.global_position
+		var plant: = PlantTreeCommand.new(self, pos)
+		plant.send()
 	
 	if (direction.x == 0 and direction.y == 0):
 		$Sprite.pause()
@@ -45,3 +51,8 @@ func on_burn(ctx: BurnCommand) -> void:
 	if ctx.burn_node == self:
 		print("Player at fire!!!")
 		pass
+
+func on_plant_tree(cmd: PlantTreeCommand) -> void:
+	if cmd.initiator == self and cmd.status == cmd.ExecutionStatus.SUCCESS:
+		print("Player plant tree")
+		#Update inventory

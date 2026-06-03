@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var ItemRes: PackedScene = preload("res://objects/item/item.tscn")
+@onready var TreeRes: PackedScene = preload("res://objects/tree/tree.tscn")
 
 const Items := Item.Type
 const Status: = Command.ExecutionStatus
@@ -10,6 +11,7 @@ func _ready() -> void:
 	create_initial_items()
 	Events.item_spawn_command.connect(on_item_spawn_command)
 	Events.item_destroy_command.connect(on_item_destroy_command)
+	Events.plant_tree_command.connect(on_plant_tree_command)
 
 func create_initial_items() -> void:
 	var world_size: Rect2 = Settings.get_world_rect()
@@ -49,3 +51,12 @@ func on_item_destroy_command(context: ItemDestroyCommand) -> void:
 		return
 	context.item_node.queue_free()
 	context.set_completed()
+	
+func on_plant_tree_command(cmd: PlantTreeCommand) -> void:
+	var tree: Node2D = TreeRes.instantiate() as Node2D
+	if tree:
+		$Nature.add_child(tree)
+		tree.global_position = cmd.position
+		cmd.set_completed()
+	else:
+		cmd.set_completed(cmd.ExecutionStatus.FAILED)

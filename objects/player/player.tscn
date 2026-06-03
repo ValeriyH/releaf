@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://ccldhoc0ddoi3"]
 
-[ext_resource type="Script" uid="uid://hdwdfx72whs2" path="res://objects/player/player.gd" id="1_cqmt1"]
+[ext_resource type="Script" uid="uid://hdwdfx72whs2" path="res://objects/player/player.gd" id="1_ssrue"]
 [ext_resource type="Texture2D" uid="uid://dnt13iy3bhjcf" path="res://objects/player/player.png" id="2_g7ett"]
+[ext_resource type="Texture2D" uid="uid://dbwafofr3rpx4" path="res://objects/item/res/seed.png" id="3_ssrue"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g7ett"]
 
@@ -61,7 +62,7 @@ size = Vector2(12.85, 26.5)
 [node name="Player" type="CharacterBody2D" unique_id=98190796]
 z_index = 1
 collision_layer = 3
-script = ExtResource("1_cqmt1")
+script = ExtResource("1_ssrue")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=272593210]
 shape = SubResource("CircleShape2D_g7ett")
@@ -78,10 +79,14 @@ zoom = Vector2(2, 2)
 position = Vector2(14, 0)
 scale = Vector2(2.2, 1)
 collision_layer = 0
-collision_mask = 12
+collision_mask = 13
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActionBox" unique_id=2096711947]
 shape = SubResource("RectangleShape2D_g7ett")
+
+[node name="Sprite2D" type="Sprite2D" parent="ActionBox" unique_id=1808881072]
+scale = Vector2(0.246, 0.5)
+texture = ExtResource("3_ssrue")
 
 [connection signal="area_entered" from="ActionBox" to="." method="on_action_box_body_entered"]
 [connection signal="body_entered" from="ActionBox" to="." method="on_action_box_body_entered"]
