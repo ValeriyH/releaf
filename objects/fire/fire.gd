@@ -3,7 +3,7 @@ extends CharacterBody2D
 @export var speed: int = 50
 @export var move_destination: int = 300
 
-const EventStatus := CommandContext.ExecutionStatus
+const EventStatus := Command.ExecutionStatus
 
 enum State {MOVING, STANDING}
 
@@ -78,10 +78,10 @@ func _on_Audio_finished() -> void:
 	
 func _on_hitbox_area_entered(node: Node2D) -> void:
 	#print("area " + node.name)
-	var ctx: = BurnContext.new(self, node)
-	Events.burn_command.emit(ctx)
+	var cmd: = BurnCommand.new(self, node)
+	cmd.send()
 
-func on_burn_processed(ctx: BurnContext) -> void:
+func on_burn_processed(ctx: BurnCommand) -> void:
 	if ctx.initiator == self and ctx.status == EventStatus.SUCCESS:
 		$Burn.play()
 		#fire grow

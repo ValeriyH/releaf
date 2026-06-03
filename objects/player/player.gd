@@ -34,14 +34,14 @@ func on_action_box_body_entered(node: Node2D) -> void:
 	print("Player area " + node.name)
 	if node is Item:
 		var item: = node as Item
-		var ctx: = PickItemContext.new(self, item)
-		Events.pick_item_command.emit(ctx)
+		var cmd: = PickItemCommand.new(self, item)
+		cmd.send()
 
-func on_pick_item(ctx: PickItemContext) -> void:
-	if ctx.initiator == self:
-		pass
+func on_pick_item(cmd: PickItemCommand) -> void:
+	if cmd.initiator == self:
+		print("Picked item " + cmd.item.name)
 
-func on_burn(ctx: BurnContext) -> void:
+func on_burn(ctx: BurnCommand) -> void:
 	if ctx.burn_node == self:
 		print("Player at fire!!!")
 		pass

@@ -27,15 +27,15 @@ func _ready() -> void:
 	Events.burn_command.connect(on_burn_command)
 	Events.pick_item_command.connect(on_pick_command)
 
-func on_burn_command(ctx: BurnContext) -> void:
+func on_burn_command(ctx: BurnCommand) -> void:
 	if ctx.burn_node == self:
 		ctx.set_completed()
-		var destroy: = ItemDestroyContext.new(self, self, ItemDestroyContext.DestroyReason.BURNED)
-		Events.item_destroy_command.emit(destroy)
+		var destroy_command: = ItemDestroyCommand.new(self, self, ItemDestroyCommand.DestroyReason.BURNED)
+		destroy_command.send()
 		
-func on_pick_command(ctx: PickItemContext) -> void:
+func on_pick_command(ctx: PickItemCommand) -> void:
 	if ctx.item == self:
 		ctx.set_completed()
-		var destroy: = ItemDestroyContext.new(self, self, ItemDestroyContext.DestroyReason.PICKED_UP)
-		Events.item_destroy_command.emit(destroy)
+		var destroy_command: = ItemDestroyCommand.new(self, self, ItemDestroyCommand.DestroyReason.PICKED_UP)
+		destroy_command.send()
 	

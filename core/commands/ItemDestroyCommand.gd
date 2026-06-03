@@ -1,5 +1,5 @@
-class_name ItemDestroyContext
-extends CommandContext
+class_name ItemDestroyCommand
+extends Command
 
 enum DestroyReason { PICKED_UP, BURNED, DECAYED }
 
@@ -8,6 +8,8 @@ var reason: DestroyReason
 
 func _init(p_initiator: Node, p_item_node: Item, p_reason: DestroyReason) -> void:
 	# Automatically wire it to report its final result back to the global processed stream
-	super(p_initiator, Events.item_destroy_processed.emit)
+	super(p_initiator,
+		Events.item_destroy_command.emit, 
+		Events.item_destroy_processed.emit)
 	self.item_node = p_item_node
 	self.reason = p_reason
