@@ -20,6 +20,7 @@ var burned_items: int = 0 #burned items since last check. If no burned items fir
 
 func _ready() -> void:
 	world_rect = Settings.get_world_rect()
+	Events.fire_quench_command.connect(on_fire_quench)
 	Events.burn_processed.connect(on_burn_processed)
 	move()
 
@@ -80,6 +81,14 @@ func _on_hitbox_area_entered(node: Node2D) -> void:
 	#print("area " + node.name)
 	var cmd: = BurnCommand.new(self, node)
 	cmd.send()
+
+func on_fire_quench(cmd: FireQuenchCommand) -> void:
+	if cmd.fire_node == self:
+		scale -= Vector2(0.1, 0.1)
+		scale = Vector2(
+			max(0.1, scale.x),
+			max(0.1, scale.y)
+		)
 
 func on_burn_processed(ctx: BurnCommand) -> void:
 	if ctx.initiator == self and ctx.status == EventStatus.SUCCESS:

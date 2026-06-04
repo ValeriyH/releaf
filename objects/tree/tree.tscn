@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bxuoyn3b1m0m"]
 
 [ext_resource type="Script" uid="uid://cgvr81minxmd6" path="res://objects/tree/tree.gd" id="1_olndm"]
-[ext_resource type="Texture2D" uid="uid://oqbcaxxguioc" path="res://objects/tree/res/tree2.tres" id="2_weuwi"]
+[ext_resource type="Texture2D" uid="uid://cfem2o7eg1jia" path="res://objects/tree/res/tree1.tres" id="2_weuwi"]
 [ext_resource type="Texture2D" uid="uid://1jos0iy0iwf1" path="res://objects/tree/res/root.tres" id="3_weuwi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_albtw"]
@@ -27,11 +27,10 @@ colors = PackedColorArray(1, 1, 0.5529412, 1, 0.9372549, 0.44705883, 0.08235294,
 metadata/_snap_enabled = true
 
 [node name="Tree" type="StaticBody2D" unique_id=413182154]
-rotation = -0.015526917
+rotation = -0.015568364
 collision_layer = 3
 collision_mask = 0
 script = ExtResource("1_olndm")
-crown_index = 1
 
 [node name="Crown" type="Sprite2D" parent="." unique_id=540769115]
 z_index = 2

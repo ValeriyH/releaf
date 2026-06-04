@@ -14,6 +14,8 @@ signal plant_tree_processed(result: PlantTreeCommand)
 
 signal burn_command(command: BurnCommand)
 signal burn_processed(result: BurnCommand)
+signal fire_quench_command(command: FireQuenchCommand)
+signal fire_quench_processed(result: FireQuenchCommand)
 @warning_ignore_restore("unused_signal")
 
 #Event signals

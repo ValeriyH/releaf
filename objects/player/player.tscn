@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://hdwdfx72whs2" path="res://objects/player/player.gd" id="1_ssrue"]
 [ext_resource type="Texture2D" uid="uid://dnt13iy3bhjcf" path="res://objects/player/player.png" id="2_g7ett"]
-[ext_resource type="Texture2D" uid="uid://dbwafofr3rpx4" path="res://objects/item/res/seed.png" id="3_ssrue"]
+[ext_resource type="Texture2D" uid="uid://bhwqyctqitrqk" path="res://objects/item/res/extinguisher.png" id="3_ssrue"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g7ett"]
 
@@ -59,10 +59,30 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g7ett"]
 size = Vector2(12.85, 26.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ssrue"]
+size = Vector2(74, 33)
+
+[sub_resource type="Gradient" id="Gradient_ssrue"]
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jnjyq"]
+gradient = SubResource("Gradient_ssrue")
+width = 6
+height = 2
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_jnjyq"]
+colors = PackedColorArray(0.5529412, 0.84313726, 0.98039216, 1, 1, 1, 1, 0)
+
 [node name="Player" type="CharacterBody2D" unique_id=98190796]
 z_index = 1
 collision_layer = 3
 script = ExtResource("1_ssrue")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=277488481]
+zoom = Vector2(2, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=272593210]
 shape = SubResource("CircleShape2D_g7ett")
@@ -72,21 +92,48 @@ position = Vector2(1, -4)
 sprite_frames = SubResource("SpriteFrames_xgwla")
 animation = &"move"
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=277488481]
-zoom = Vector2(2, 2)
+[node name="Direction" type="Node2D" parent="." unique_id=10729563]
+scale = Vector2(2, 1)
 
-[node name="ActionBox" type="Area2D" parent="." unique_id=1623332518]
-position = Vector2(14, 0)
-scale = Vector2(2.2, 1)
+[node name="ActionBox" type="Area2D" parent="Direction" unique_id=1623332518]
 collision_layer = 0
 collision_mask = 13
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ActionBox" unique_id=2096711947]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Direction/ActionBox" unique_id=2096711947]
+position = Vector2(6.363636, 0)
 shape = SubResource("RectangleShape2D_g7ett")
 
-[node name="Sprite2D" type="Sprite2D" parent="ActionBox" unique_id=1808881072]
+[node name="Sprite2D" type="Sprite2D" parent="Direction/ActionBox" unique_id=1808881072]
+position = Vector2(6.363636, 0)
 scale = Vector2(0.246, 0.5)
 texture = ExtResource("3_ssrue")
 
-[connection signal="area_entered" from="ActionBox" to="." method="on_action_box_body_entered"]
-[connection signal="body_entered" from="ActionBox" to="." method="on_action_box_body_entered"]
+[node name="HitBox" type="Area2D" parent="Direction" unique_id=1985457256]
+visible = false
+scale = Vector2(0.45454544, 1)
+collision_layer = 0
+collision_mask = 8
+input_pickable = false
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Direction/HitBox" unique_id=1727535462]
+position = Vector2(51, -7.5)
+shape = SubResource("RectangleShape2D_ssrue")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Direction/HitBox" unique_id=1683653606]
+position = Vector2(22, -7)
+scale = Vector2(2.288, 0.9968708)
+amount = 200
+texture = SubResource("GradientTexture2D_jnjyq")
+lifetime = 0.1
+spread = 35.0
+gravity = Vector2(0, -0.5)
+initial_velocity_min = 200.0
+initial_velocity_max = 300.0
+color_ramp = SubResource("Gradient_jnjyq")
+
+[connection signal="area_entered" from="Direction/ActionBox" to="." method="on_action_box_body_entered"]
+[connection signal="body_entered" from="Direction/ActionBox" to="." method="on_action_box_body_entered"]
+[connection signal="body_entered" from="Direction/HitBox" to="." method="on_hit_box_body_entered"]
+[connection signal="body_exited" from="Direction/HitBox" to="." method="on_hit_box_body_exited"]
