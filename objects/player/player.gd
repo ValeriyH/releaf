@@ -3,27 +3,31 @@ class_name Player
 
 var base_speed: = 200
 var direction: Vector2 = Vector2()
-var selected_item: Item.Type = Item.Type.Extinguisher
+var selected_item: Item.Type = Item.Type.Extinguisher:
+	set(value):
+		selected_item = value
+		$Direction/ActionBox/Sprite2D.texture = Item.TEXTURES[value]
+
 var fire_tween: Tween
 
 func _ready() -> void:
 	Events.burn_command.connect(on_burn)
 	Events.pick_item_processed.connect(on_pick_item)
 	Events.plant_tree_processed.connect(on_plant_tree)
+	Events.select_item_command.connect(on_select_item)
 
 func _input(event: InputEvent) -> void:
-	if (event is not InputEventKey):
-		return
+	#if (event is not InputEventKey):
+	#	return
 		
 	#Temporary: Use SelectItemCommand to switch between items in inventory
 	var key_event: = event as InputEventKey
-	match key_event.keycode:
-		KEY_1:
-			selected_item = Item.Type.Seed
-			$Direction/ActionBox/Sprite2D.texture = Item.TEXTURES[selected_item]
-		KEY_2:
-			selected_item = Item.Type.Extinguisher
-			$Direction/ActionBox/Sprite2D.texture = Item.TEXTURES[selected_item]
+	if key_event:
+		match key_event.keycode:
+			KEY_1:
+				selected_item = Item.Type.Seed
+			KEY_2:
+				selected_item = Item.Type.Extinguisher
 	
 	direction = Vector2(
 		Input.get_axis("ui_left", "ui_right"),
@@ -91,6 +95,11 @@ func on_plant_tree(cmd: PlantTreeCommand) -> void:
 	if cmd.initiator == self and cmd.status == cmd.ExecutionStatus.SUCCESS:
 		print("Player plant tree")
 		
+func on_select_item(cmd: SelectItemCommand) -> void:
+	selected_item = cmd.item
+	cmd.set_completed()
+	
+	
 func on_hit_box_body_entered(body: Node2D) -> void:
 	print("Fire enter hitbox " + body.name)
 	var hit: = true

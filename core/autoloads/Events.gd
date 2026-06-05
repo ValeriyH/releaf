@@ -8,6 +8,8 @@ signal pick_item_command(command: PickItemCommand)
 signal pick_item_processed(result: PickItemCommand)
 signal item_destroy_command(command: ItemDestroyCommand)
 signal item_destroy_processed(result: ItemDestroyCommand)
+signal select_item_command(command: SelectItemCommand)
+signal select_item_processed(result: SelectItemCommand)
 
 signal plant_tree_command(command: PlantTreeCommand)
 signal plant_tree_processed(result: PlantTreeCommand)
