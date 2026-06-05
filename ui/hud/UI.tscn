@@ -8,6 +8,20 @@
 [node name="CanvasLayer" type="CanvasLayer" unique_id=294099641]
 script = ExtResource("1_w16w6")
 
+[node name="Panel" type="Panel" parent="." unique_id=936748142]
+offset_left = 583.99994
+offset_top = 510.00006
+offset_right = 611.19666
+offset_bottom = 512.78064
+scale = Vector2(4.8902936, 24.09555)
+
+[node name="Panel2" type="Panel" parent="." unique_id=35589641]
+offset_left = 1073.0
+offset_top = 512.0
+offset_right = 1089.5635
+offset_bottom = 514.7806
+scale = Vector2(4.8902936, 24.09555)
+
 [node name="TouchScreenJoystick" type="Control" parent="." unique_id=348628100]
 z_index = 4
 layout_mode = 3
@@ -24,16 +38,16 @@ metadata/_custom_type_script = "uid://crds4brhw3t5o"
 
 [node name="ActionButton" type="TouchScreenButton" parent="." unique_id=842687131]
 z_index = 4
-position = Vector2(984, 520)
+position = Vector2(1104, 520)
 texture_normal = ExtResource("2_scbgu")
 action = "ui_accept"
 
 [node name="Seed" type="TouchScreenButton" parent="." unique_id=1345523767]
-position = Vector2(464, 520)
+position = Vector2(600, 528)
 texture_normal = ExtResource("3_po8vy")
 
 [node name="Extinguisher" type="TouchScreenButton" parent="." unique_id=1580042918]
-position = Vector2(528, 520)
+position = Vector2(664, 520)
 texture_normal = ExtResource("2_scbgu")
 
 [connection signal="pressed" from="Seed" to="." method="on_seed_pressed"]
