@@ -14,6 +14,16 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if (event is not InputEventKey):
 		return
+		
+	#Temporary: Use SelectItemCommand to switch between items in inventory
+	var key_event: = event as InputEventKey
+	match key_event.keycode:
+		KEY_1:
+			selected_item = Item.Type.Seed
+			$Direction/ActionBox/Sprite2D.texture = Item.TEXTURES[selected_item]
+		KEY_2:
+			selected_item = Item.Type.Extinguisher
+			$Direction/ActionBox/Sprite2D.texture = Item.TEXTURES[selected_item]
 	
 	direction = Vector2(
 		Input.get_axis("ui_left", "ui_right"),
@@ -42,6 +52,7 @@ func _input(event: InputEvent) -> void:
 		direction = direction.normalized() * base_speed
 		if direction.x != 0:
 			$Direction.scale.x = abs($Direction.scale.x) * sign(direction.x)
+			
 
 func _process(delta: float) -> void:
 	move_and_collide(direction * delta)
