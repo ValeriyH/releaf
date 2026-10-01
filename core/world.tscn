@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://dol686rwoywed" path="res://objects/fire/fire.tscn" id="3_ccd7m"]
 [ext_resource type="PackedScene" uid="uid://bxuoyn3b1m0m" path="res://objects/tree/tree.tscn" id="3_e68cy"]
 [ext_resource type="PackedScene" uid="uid://cwhcn1mgj5p3n" path="res://objects/stone/stone.tscn" id="4_e68cy"]
+[ext_resource type="Script" path="res://core/background.gd" id="5_bg"]
+[ext_resource type="Script" path="res://core/boundary.gd" id="6_bnd"]
 
 [node name="World" type="Node2D" unique_id=1108878015]
 script = ExtResource("1_wd0q5")
@@ -102,10 +104,10 @@ rotation = -0.03488421
 
 [node name="Items" type="Node2D" parent="." unique_id=77033107]
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=45847252]
+[node name="Background" type="Node2D" parent="." unique_id=45847252]
 z_index = -10
-offset_left = -800.0
-offset_top = -480.0
-offset_right = 800.0
-offset_bottom = 480.0
-color = Color(0.2077303, 0.31993493, 0.2852492, 1)
+script = ExtResource("5_bg")
+
+[node name="Boundary" type="Node2D" parent="." unique_id=600000001]
+z_index = -20
+script = ExtResource("6_bnd")
