@@ -2,6 +2,8 @@
 
 A 2D top-down Godot 4 game where the player manages a forest: planting trees, extinguishing fires, and collecting items.
 
+> **Note**: `AGENTS.md` auto-loads at session start and instructs the agent to read this file.
+
 ## Tech Stack
 
 - **Engine**: Godot 4.6 (GL Compatibility, D3D12)
@@ -18,6 +20,7 @@ releaf/
 │   ├── world.tscn             # World scene (player, enemies, nature, items, background)
 │   ├── world.gd               # World script (item spawning, tree planting)
 │   ├── background.gd          # Procedural background generator (grass, roads, flowers)
+│   ├── boundary.gd            # World boundary (collision walls + dark gradient)
 │   ├── autoloads/
 │   │   ├── Global.gd          # Layer enums (OBSTACLE, FIREABLE, ITEM, FIRE, etc.)
 │   │   ├── Events.gd          # Global signal bus for commands
@@ -66,7 +69,7 @@ releaf/
 |----------|------|---------|
 | `Global` | `core/autoloads/Global.gd` | Layer enums (`OBSTACLE`, `FIREABLE`, `ITEM`, `FIRE`, `TREE`, `STONE`, `WATER`) and layer masks |
 | `Events` | `core/autoloads/Events.gd` | Global signal bus — all command signals (spawn, destroy, pick, plant, burn, quench, select) |
-| `Settings` | `core/autoloads/Settings.gd` | World constants: `INIT_SEEDS=20`, `INIT_ITEMS=20`, `get_world_rect()` returns `Rect2(-800, -480, 1600, 960)` |
+| `Settings` | `core/autoloads/Settings.gd` | World constants: `INIT_SEEDS=20`, `INIT_ITEMS=20`, `get_world_rect()` returns `Rect2(-1600, -960, 3200, 1920)` |
 
 ## Command System
 
@@ -124,9 +127,14 @@ All game actions go through a **command pattern**:
 
 - **Background**: Procedurally generated at startup by `core/background.gd`
   - 12 tile types: 4 grass variants, road, road edge, 4 flowers, 2 grass tufts
-  - 32x32 pixel tiles, world is 50x30 tiles (1600x960)
+  - 32x32 pixel tiles, world is 100x60 tiles (3200x1920)
   - Horizontal road, vertical road, winding path
   - Random flowers (~3%) and grass tufts (~5%)
+- **Boundary**: `core/boundary.gd` provides collision walls and dark gradient
+  - 4 `StaticBody2D` walls (40px thick) on OBSTACLE layer block player and fires
+  - Dark gradient texture (512x512) with noise for smoky effect
+  - `OutsideDarkness` sprite covers area outside world rect
+  - Gradient extends 600px beyond world edges
 - **Initial items**: 20 seeds + 20 random items spawned at random positions
 - **Trees**: 8 trees placed in world.tscn
 - **Stones**: 9 stones placed in world.tscn
