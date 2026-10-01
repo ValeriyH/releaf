@@ -8,11 +8,40 @@ const Status: = Command.ExecutionStatus
 
 func _ready() -> void:
 	randomize()
+	create_border()
 	create_initial_items()
 	Events.item_spawn_command.connect(on_item_spawn_command)
 	Events.item_destroy_command.connect(on_item_destroy_command)
 	Events.plant_tree_command.connect(on_plant_tree_command)
 
+func create_border() -> void:
+	#set default background to black (outside map)
+	RenderingServer.set_default_clear_color(Color.BLACK)
+	#set fade on map border
+	var world: = Settings.get_world_rect()
+	$Border.position = world.position
+	$Border.size = world.size
+	$Border.material.set_shader_parameter("rect_size", world.size)
+	
+	#create world barriers (StaticBody2D)
+	const offset: = 10
+	var static_body: = StaticBody2D.new()
+	add_child(static_body)
+	var boundaries: Array[Dictionary] = [
+		{"pos": Vector2(world.position.x + offset, world.get_center().y), "normal": Vector2.RIGHT}, #Left
+		{"pos": Vector2(world.end.x - offset, world.get_center().y),      "normal": Vector2.LEFT},  # Right
+		{"pos": Vector2(world.get_center().x, world.position.y + offset), "normal": Vector2.DOWN},  # Up
+		{"pos": Vector2(world.get_center().x, world.end.y - offset),      "normal": Vector2.UP}  # Down
+	]
+	for b in boundaries:
+		var col: = CollisionShape2D.new()
+		var boundary_shape: = WorldBoundaryShape2D.new()
+		boundary_shape.normal = b["normal"]
+		col.shape = boundary_shape
+		col.global_position = b["pos"]
+		static_body.add_child(col)	
+	
+	
 func create_initial_items() -> void:
 	var world_size: Rect2 = Settings.get_world_rect()
 	var random_vector: = func() -> Vector2: 

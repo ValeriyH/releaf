@@ -5,8 +5,27 @@
 [ext_resource type="PackedScene" uid="uid://dol686rwoywed" path="res://objects/fire/fire.tscn" id="3_ccd7m"]
 [ext_resource type="PackedScene" uid="uid://bxuoyn3b1m0m" path="res://objects/tree/tree.tscn" id="3_e68cy"]
 [ext_resource type="PackedScene" uid="uid://cwhcn1mgj5p3n" path="res://objects/stone/stone.tscn" id="4_e68cy"]
-[ext_resource type="Script" path="res://core/background.gd" id="5_bg"]
-[ext_resource type="Script" path="res://core/boundary.gd" id="6_bnd"]
+[ext_resource type="Script" uid="uid://ry5xav7tpdgr" path="res://core/background.gd" id="5_bg"]
+[ext_resource type="Shader" uid="uid://b0k41og2u1btv" path="res://core/world.gdshader" id="8_2uijj"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2uijj"]
+seed = 10
+frequency = 0.069
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_aavaf"]
+noise = SubResource("FastNoiseLite_2uijj")
+seamless = true
+seamless_blend_skirt = 0.224
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aavaf"]
+shader = ExtResource("8_2uijj")
+shader_parameter/dusk_color = Color(0, 0, 0, 0.98200005)
+shader_parameter/margin_in_pixels = 200.0
+shader_parameter/rect_size = Vector2(1000, 1000)
+shader_parameter/falloff = 0.10000000149012
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_aavaf")
+shader_parameter/noise_amount = 10.0
+shader_parameter/noise_scale = Vector2(4, 4)
 
 [node name="World" type="Node2D" unique_id=1108878015]
 script = ExtResource("1_wd0q5")
@@ -35,30 +54,31 @@ position = Vector2(27, 179)
 
 [node name="Tree6" parent="Nature" unique_id=413182154 instance=ExtResource("3_e68cy")]
 position = Vector2(-237, 103)
-rotation = -0.03488421
+rotation = 0.0008360755
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="Tree" parent="Nature" unique_id=747391514 instance=ExtResource("3_e68cy")]
 position = Vector2(492, 1)
-rotation = -0.03488421
+rotation = 0.0008360755
+crown_index = 1
 
 [node name="Tree4" parent="Nature" unique_id=1777314844 instance=ExtResource("3_e68cy")]
 position = Vector2(-140, -49)
-rotation = -0.03488421
+rotation = 0.0008360755
 
 [node name="Tree2" parent="Nature" unique_id=770564349 instance=ExtResource("3_e68cy")]
 position = Vector2(-98, 214)
-rotation = -0.03488421
+rotation = 0.0008360755
+crown_index = 1
 
 [node name="Tree3" parent="Nature" unique_id=1419704173 instance=ExtResource("3_e68cy")]
 position = Vector2(223, -6)
-rotation = -0.03488421
-crown_index = 0
+rotation = 0.0008360755
 
 [node name="Tree5" parent="Nature" unique_id=1031709671 instance=ExtResource("3_e68cy")]
 position = Vector2(124, 291)
-rotation = -0.03488421
-crown_index = 0
+rotation = 0.0008360755
+crown_index = 1
 
 [node name="Stone" parent="Nature" unique_id=1537947566 instance=ExtResource("4_e68cy")]
 position = Vector2(-22, -103)
@@ -66,29 +86,25 @@ stone_index = 0
 
 [node name="Stone2" parent="Nature" unique_id=784351681 instance=ExtResource("4_e68cy")]
 position = Vector2(-351, 80)
-stone_index = 0
 
 [node name="Stone3" parent="Nature" unique_id=554866132 instance=ExtResource("4_e68cy")]
 position = Vector2(357, 26)
-stone_index = 0
 
 [node name="Stone4" parent="Nature" unique_id=186935654 instance=ExtResource("4_e68cy")]
 position = Vector2(425, 246)
-stone_index = 0
 
 [node name="Stone5" parent="Nature" unique_id=337742790 instance=ExtResource("4_e68cy")]
 position = Vector2(-373, 248)
 
 [node name="Stone6" parent="Nature" unique_id=1586706787 instance=ExtResource("4_e68cy")]
 position = Vector2(260, -167)
+stone_index = 0
 
 [node name="Stone7" parent="Nature" unique_id=1460444760 instance=ExtResource("4_e68cy")]
 position = Vector2(-271, -85)
-stone_index = 0
 
 [node name="Stone8" parent="Nature" unique_id=2020561437 instance=ExtResource("4_e68cy")]
 position = Vector2(-115, 355)
-stone_index = 0
 
 [node name="Stone9" parent="Nature" unique_id=1443111703 instance=ExtResource("4_e68cy")]
 position = Vector2(205, 76)
@@ -96,11 +112,13 @@ stone_index = 0
 
 [node name="Tree7" parent="Nature" unique_id=1011003658 instance=ExtResource("3_e68cy")]
 position = Vector2(65, -23.999985)
-rotation = -0.03488421
+rotation = 0.0008360755
+crown_index = 1
 
 [node name="Tree8" parent="Nature" unique_id=801266458 instance=ExtResource("3_e68cy")]
 position = Vector2(273.99997, 184)
-rotation = -0.03488421
+rotation = 0.0008360755
+crown_index = 1
 
 [node name="Items" type="Node2D" parent="." unique_id=77033107]
 
@@ -108,6 +126,11 @@ rotation = -0.03488421
 z_index = -10
 script = ExtResource("5_bg")
 
-[node name="Boundary" type="Node2D" parent="." unique_id=600000001]
-z_index = -20
-script = ExtResource("6_bnd")
+[node name="Border" type="ColorRect" parent="." unique_id=1217399797]
+z_index = 10
+material = SubResource("ShaderMaterial_aavaf")
+offset_left = -230.0
+offset_top = -139.0
+offset_right = 161.0
+offset_bottom = 179.0
+mouse_filter = 2
