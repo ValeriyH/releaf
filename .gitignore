@@ -15,3 +15,6 @@ export_credentials.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# Local asset generators (output is copied into assets/ and objects/ by hand)
+tools/tileset_gen/

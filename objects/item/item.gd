@@ -13,7 +13,7 @@ const TEXTURES: = {
 	Type.Seed: preload("res://objects/item/res/seed.png"),
 	Type.Heart: preload("res://objects/item/res/heart.png"),
 	Type.IceCream: preload("res://objects/item/res/icecream.png"),
-	Type.Extinguisher: preload("res://objects/item/res/extinguisher.png"),
+	Type.Extinguisher: preload("res://objects/item/res/extinguisher_v2.png"),
 }
 
 @export var item: = Type.Seed:

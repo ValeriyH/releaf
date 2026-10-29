@@ -8,7 +8,7 @@ A 2D top-down Godot 4 game where the player manages a forest: planting trees, ex
 
 - **Engine**: Godot 4.6 (GL Compatibility, D3D12)
 - **Language**: GDScript
-- **Physics**: Jolt Physics (2D)
+- **Physics**: Godot 2D physics
 - **Resolution**: 1280x720, stretch mode `canvas_items`
 
 ## Directory Structure
@@ -18,9 +18,9 @@ releaf/
 ├── core/
 │   ├── main.tscn              # Main scene (World + HUD)
 │   ├── world.tscn             # World scene (player, enemies, nature, items, background)
-│   ├── world.gd               # World script (item spawning, tree planting)
-│   ├── background.gd          # Procedural background generator (grass, roads, flowers)
-│   ├── boundary.gd            # World boundary (collision walls + dark gradient)
+│   ├── world.gd               # World script (item spawning, tree planting, WorldBoundary set)
+│   ├── background.gd          # Background generator (terrain autotiling: grass, roads, pond, decor)
+│   ├── world.gdshader         # World boundary fade shaper
 │   ├── autoloads/
 │   │   ├── Global.gd          # Layer enums (OBSTACLE, FIREABLE, ITEM, FIRE, etc.)
 │   │   ├── Events.gd          # Global signal bus for commands
@@ -58,7 +58,10 @@ releaf/
 ├── addons/
 │   └── touch_screen_joystick/ # Virtual joystick for mobile
 └── assets/
+    ├── ASSET_SOURCES.md       # Asset sources and licences (many still unknown)
     ├── atlas/                 # Texture atlases
+    ├── tilesets/              # releaf_tileset.png/.tres (terrain autotiling, Releaf32 palette)
+    ├── palette/               # Releaf32 palette (.gpl, .png)
     ├── audio/                 # Sound effects
     └── fonts/                 # Fonts
 ```
@@ -125,12 +128,12 @@ All game actions go through a **command pattern**:
 
 ## World Generation
 
-- **Background**: Procedurally generated at startup by `core/background.gd`
-  - 12 tile types: 4 grass variants, road, road edge, 4 flowers, 2 grass tufts
-  - 32x32 pixel tiles, world is 100x60 tiles (3200x1920)
-  - Horizontal road, vertical road, winding path
-  - Random flowers (~3%) and grass tufts (~5%)
-- **Boundary**: `core/boundary.gd` provides collision walls and dark gradient
+- **Background**: Generated at startup by `core/background.gd` from `assets/tilesets/releaf_tileset.tres`
+  - 32x32 tiles, world is 100x60 tiles (3200x1920)
+  - TileSet terrain set 0 (match corners and sides): `Grass`=0, `Road`=1, `Water`=2; blob-47 autotiling for road and water
+  - Grass is filled randomly from 4 variants, then pond (ellipse, top right), horizontal road, vertical road and a winding path are painted with `set_cells_terrain_connect`
+  - Flowers (~3%) and grass tufts (~5%) are scattered on plain grass only
+- **Boundary**: collision walls and dark gradient (see `core/world.gd`, `core/world.gdshader`)
   - 4 `StaticBody2D` walls (40px thick) on OBSTACLE layer block player and fires
   - Dark gradient texture (512x512) with noise for smoky effect
   - `OutsideDarkness` sprite covers area outside world rect
@@ -164,3 +167,10 @@ All game actions go through a **command pattern**:
 - `TouchScreenJoystick` (left side) for movement
 - `ActionButton` (right side) for context action
 - Seed and Extinguisher buttons to switch active item
+
+## Art Pipeline
+
+- Generators (Python + Pillow) live in `tools/tileset_gen/`, which is **git-ignored and `.gdignore`d**: it is a local scratch folder only. Nothing in the project may reference it. Approved results are copied by hand into `assets/` or `objects/`.
+- Generated and approved so far: `assets/tilesets/releaf_tileset.{png,tres}`, `assets/palette/`, `objects/item/res/extinguisher_v2.png` (the old `extinguisher.png` is no longer referenced).
+- **Palette "Releaf32"** (`assets/palette/palette.gpl`): 32 colours. New art should use only these, dark warm outline (`#342116`), light from top-left, no pure black.
+- Still off-style: `heart`, `icecream`, `fire`. Licence/source of most assets is unknown, see `assets/ASSET_SOURCES.md`.

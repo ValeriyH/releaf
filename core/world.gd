@@ -41,7 +41,6 @@ func create_border() -> void:
 		col.global_position = b["pos"]
 		static_body.add_child(col)	
 	
-	
 func create_initial_items() -> void:
 	var world_size: Rect2 = Settings.get_world_rect()
 	var random_vector: = func() -> Vector2: 
