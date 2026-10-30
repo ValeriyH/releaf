@@ -1,7 +1,5 @@
 # Releaf — джерела та ліцензії ассетів
 
-Станом на 2026-10-29. У репозиторії **немає жодного файлу з кредитами**, крім ліцензії аддона джойстика. Походження решти ассетів у проєкті не зафіксоване, тому я його не вигадую: де це не підтверджено файлами — стоїть «НЕ ВІДОМО, заповнити».
-
 ## Підтверджено файлами проєкту
 
 | Компонент | Шлях | Автор | Ліцензія | Підтвердження |
@@ -9,25 +7,21 @@
 | Touch Screen Joystick (аддон) | `addons/touch_screen_joystick/` | Kent Coyoca | MIT | `addons/touch_screen_joystick/LICENSE.md` |
 | Godot Engine 4.6 | — | Godot contributors | MIT | https://godotengine.org/license |
 
-## Потребує підтвердження (джерело в репозиторії не вказане)
+## Інші ассети що використовуються в проекті
 
 | Ассет | Шлях | Автор / джерело | Ліцензія | Вимоги атрибуції | Примітка |
 |---|---|---|---|---|---|
-| Атлас землі, дерев, каменів, води | `assets/atlas/terrain_atlas.png` | «LPC Tile Atlas», збірка ассетів Liberated Pixel Cup, склав adrix89 (не автор тайлів), https://opengameart.org/content/lpc-tile-atlas . Окремі автори (напр. Johann C, дерево) перелічені в `Attribution.txt` усередині Atlas.zip | CC-BY-SA 3.0 **або** GPL 3.0 (за сторінкою, перевірено 2026-10-30) | **Обов'язкова**: вказати авторів і ліцензію (файл `Attribution.txt` додано; згадка всіх авторів буде на екрані Credits, який плануємо додати пізніше); **Share-Alike**: змінені/похідні версії атласу поширювати під CC-BY-SA 3.0 (або GPL 3.0) | 1024×1024, сітка 16 px. Використовується через `objects/tree/res/*.tres`, `objects/stone/*.tres`. Список авторів: `assets/atlas/Attribution.txt` (оригінальний файл з архіву, не змінювати). Автори: Lanea Zimmerman (Sharm), Casper Nilsson, Daniel Eddeland, Johann Charlot (LGPL 3, «Shoot'em up graphic kit»), Skyler Robert Colladay, Stephen Challener (Redshrike), Charles Sanchez (CharlesGabriel), Manuel Riecke (MrBeast), Daniel Armstrong (HughSpectrum). Окремі автори вказують GPL 3.0+ або LGPL 3, а не CC-BY-SA: який автор зробив саме використані тайли (дерева, камені), не з'ясовано. Тексти ліцензій `cc-by-sa-3.0.txt`, `gpl-3.0.txt` з архіву в проєкт не додані |
-| Лис (гравець) | `objects/player/player.png` | ansimuz, «SunnyLand – Free Pixel Game Art Assets Pack», https://ansimuz.itch.io/sunny-land-pixel-game-art (джерело вказав власник проєкту; спочатку лис був у туторіалі Godot) | CC0 1.0 (за сторінкою паку, перевірено 2026-10-30) | Не вимагається (CC0); автора варто згадати в Credits | 6 кадрів 33×32. Збіг зі спрайтом паку не звіряв піксель-в-піксель. Сторінка згадує платний варіант Plus: його ліцензія на сторінці не вказана, тож використовувати лише файли безкоштовного паку |
-| Анімація вогню | `objects/fire/res/fire.png` | НЕ ВІДОМО | НЕ ВІДОМО | НЕ ВІДОМО | 12×6 кадрів, 1024×512 |
-| Предмети: seed, heart, icecream, extinguisher | `objects/item/res/*.png` | НЕ ВІДОМО | НЕ ВІДОМО | НЕ ВІДОМО | seed — стиль лиса; heart/icecream/extinguisher — Material-палітра, ймовірно з іншого джерела |
-| Звук вогню та горіння | `objects/fire/res/fire.wav`, `burn.wav` | НЕ ВІДОМО | НЕ ВІДОМО | НЕ ВІДОМО | |
-| Іконка проєкту | `icon.svg` | НЕ ВІДОМО (можливо, стандартна іконка Godot) | CC BY 4.0 (якщо це шаблон Godot) | Для стандартної: вказати Godot | перевірити |
+| Атлас землі, дерев, каменів, води | `assets/atlas/terrain_atlas.png` | «LPC Tile Atlas», збірка ассетів Liberated Pixel Cup, склав adrix89, https://opengameart.org/content/lpc-tile-atlas . Автори перелічені в `Attribution.txt` усередині `assets/atlas/Attribution.txt` | CC-BY-SA 3.0 **або** GPL 3.0 | **Обов'язково**: вказати авторів і ліцензію (файл `Attribution.txt` додано; згадка всіх авторів буде на екрані Credits, який планується пізніше); | 1024×1024, сітка 16 px. Використовується через `objects/tree/res/*.tres`, `objects/stone/*.tres`. Список авторів: `assets/atlas/Attribution.txt` |
+| Лис (гравець) | `objects/player/player.png` | ansimuz, «SunnyLand – Free Pixel Game Art Assets Pack», https://ansimuz.itch.io/sunny-land-pixel-game-art | CC0 1.0 (на 2026-10-30) | Не вимагається (CC0); автора варто згадати в Credits | 6 кадрів 33×32. |
+| Анімація вогню | `objects/fire/res/fire.png` | tauran https://opengameart.org/content/animated-flame-texture | CC0 | Не вимагається (CC0); автора варто згадати в Credits | 12×6 кадрів, 1024×512 |
+| Звук вогню та горіння | `objects/fire/res/fire.wav`, `burn.wav` | PagDev https://opengameart.org/content/fireplace-sound-loop | CC0| Не вимагається (CC0); автора варто згадати в Credits | |
+| Іконка проєкту | `icon.svg` | стандартна іконка Godot | CC BY 4.0 |  Godot |  |
 
-## Невідповідність у документації
+## Правила додавання в таблицю
 
-`PROJECT.md` згадує `assets/audio/` і `assets/fonts/`, а також `core/boundary.gd`; у файловій системі цих папок/файлу немає (звуки лежать у `objects/fire/res/`). Шрифтів у проєкті не знайдено.
-
-## Що зробити, щоб закрити таблицю
-
-1. Для кожного рядка «НЕ ВІДОМО» знайти сторінку-джерело (itch.io / OpenGameArt / Kenney / тощо) — історія браузера, папка завантажень, або зворотний пошук зображення.
+1. Для кожного ассета вказувати сторінку-джерело (itch.io / OpenGameArt / Kenney / тощо)
 2. Записати: назву паку, автора, URL, ліцензію (CC0 / CC BY / CC BY-SA / платна тощо), дату завантаження.
 3. Якщо ліцензія CC BY — додати атрибуцію в гру (екран Credits) і сюди.
-4. Якщо ліцензія забороняє перерозповсюдження ассетів у вихідному коді (комерційні паки) — не тримати їх у публічному git-репозиторії; зараз репозиторій публікується на GitHub (`Initial push to github`).
-5. Якщо ліцензію встановити не вдається, ассет безпечніше замінити на власний/CC0 — тайлсет `assets/tilesets/` уже зроблений з нуля й власності третіх осіб не містить: палітра взята як набір значень кольорів, піксельних даних з чужих ассетів скрипт не копіює.
+4. Якщо ліцензія забороняє перерозповсюдження ассетів у вихідному коді (комерційні паки) — не тримати їх у публічному git-репозиторії;
+5. Якщо ліцензію встановити не вдається, ассет безпечніше замінити на власний/CC0
+6. Ассети, які зроблений з нуля й власності третіх осіб не містить (як от тайлсет `assets/tilesets/`) в таблицю не додаються.
