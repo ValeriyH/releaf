@@ -63,5 +63,4 @@
 - Generators (Python + Pillow) live in `tools/assets_gen/`; `tools/` is `.gdignore`d and `tools/assets_gen/output/` is **git-ignored** (scratch results). Nothing in the game may reference `tools/`. Approved results are copied by hand into `assets/` or `objects/`.
 - Generated and approved so far: `assets/tilesets/releaf_tileset.{png,tres}`, `assets/palette/`, `icon.png` (64x64 art shown at 4x, from `generate_icon.py`), `objects/item/res/extinguisher_v2.png`, `ui/hud/res/` (touch controls and digits, from `generate_touch_controls.py`; drawn at 3x with nearest filtering), `objects/player/res/shovel.png`, `objects/item/res/seed.png`, `objects/item/res/refill.png`, `objects/item/res/medkit.png` (from `generate_items.py`). The seed is an acorn drawn from scratch, not derived from the old pine cone. The medkit cross is green on purpose: the red cross on white is a protected emblem.
 - **Palette "Releaf32"** (`assets/palette/palette.gpl`): 32 colours. New art should use only these, dark warm outline (`#342116`), light from top-left, no pure black.
-- `heart`, `icecream`, the old `seed` and the old `extinguisher` were removed or replaced because their source is unknown.
-- Still off-style: `fire`. Licence/source of most assets is unknown, see `assets/ASSET_SOURCES.md`.
+- Still off-style: `fire`
