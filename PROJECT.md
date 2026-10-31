@@ -1,6 +1,6 @@
 # Releaf — Project Overview
 
-A 2D top-down Godot 4 game where the player manages a forest: planting trees, extinguishing fires, and collecting items.
+A 2D top-down Godot 4 game where the player manages a forest: planting trees, extinguishing fires, and collecting supplies before the fire burns them.
 
 > **Note**: [AGENTS.md](AGENTS.md) auto-loads at session start and instructs the agent to read this file.
 
@@ -9,7 +9,8 @@ A 2D top-down Godot 4 game where the player manages a forest: planting trees, ex
 - **Engine**: Godot 4.6 (GL Compatibility, D3D12)
 - **Language**: GDScript
 - **Physics**: Godot 2D physics
-- **Resolution**: 1280x720, stretch mode `canvas_items`
+- **Resolution**: 1280x720, stretch mode `canvas_items`, aspect `expand` (wide and tall screens see more of the world, no black bars)
+- **Orientation on handhelds**: sensor landscape
 
 ## Directory Structure
 
@@ -24,7 +25,7 @@ releaf/
 │   ├── autoloads/
 │   │   ├── Global.gd          # Layer enums (OBSTACLE, FIREABLE, ITEM, FIRE, etc.)
 │   │   ├── Events.gd          # Global signal bus for commands
-│   │   └── Settings.gd        # World constants (INIT_SEEDS=20, INIT_ITEMS=20, world rect)
+│   │   └── Settings.gd        # World and balance constants (item counts, health, tank, stock limits)
 │   └── commands/
 │       ├── Command.gd         # Abstract base command (initiator, status, send/set_completed)
 │       ├── BurnCommand.gd     # Fire burns a node
@@ -33,10 +34,13 @@ releaf/
 │       ├── ItemDestroyCommand.gd # Destroy item (PICKED_UP, BURNED, DECAYED)
 │       ├── PickItemCommand.gd   # Player picks up item
 │       ├── PlantTreeCommand.gd  # Player plants a tree
-│       └── SelectItemCommand.gd # Switch active item
+│       ├── SelectToolCommand.gd # Switch active tool
+│       └── UseItemCommand.gd  # Spend an item from stock (sent automatically by the player)
 ├── objects/
 │   ├── player/
-│   │   ├── player.gd          # CharacterBody2D, WASD movement, item interaction
+│   │   ├── player.gd          # CharacterBody2D, polled analog movement, tools, health, tank, item stock
+│   │   ├── player_tool.gd     # PlayerTool: tool types (Shovel, Extinguisher) and textures
+│   │   ├── res/               # shovel.png
 │   │   ├── player.tscn        # Camera2D (zoom 2x), AnimatedSprite2D, ActionBox, HitBox
 │   │   └── player.png         # Player sprite sheet
 │   ├── tree/
@@ -52,16 +56,18 @@ releaf/
 │   │   ├── fire.tscn          # AnimatedSprite2D, Hitbox, BurnRadius, timers
 │   │   └── res/               # fire.png, fire.wav, burn.wav
 │   └── item/
-│       ├── item.gd            # Area2D, types: Seed, Heart, IceCream, Extinguisher
+│       ├── item.gd            # Area2D, types: Seed, Refill, Medkit
 │       ├── item.tscn
-│       └── res/               # seed, heart, icecream, extinguisher (old), extinguisher_v2 (.png)
+│       └── res/               # seed, refill, medkit, extinguisher_v2 (tool sprite)
 ├── ui/
 │   ├── hud/
-│   │   ├── ui.gd              # HUD script (seed/extinguisher buttons)
-│   │   └── UI.tscn            # CanvasLayer, TouchScreenJoystick, action buttons
+│   │   ├── ui.gd              # HUD script (layout, safe area, item selection, show/hide)
+│   │   ├── UI.tscn            # CanvasLayer, Joystick, ActionButton, item slots
+│   │   ├── virtual_joystick.gd # VirtualJoystick: floating stick, presses ui_left/right/up/down with analog strength
+│   │   ├── touch_button.gd    # TouchButton: round button with its own finger tracking, optional input action
+│   │   ├── status_panel.gd    # StatusPanel: health bar and item stock
+│   │   └── res/               # Touch control sprites and digits (generated, see "Art Pipeline")
 │   └── main_menu/             # Empty (not implemented)
-├── addons/
-│   └── touch_screen_joystick/ # Virtual joystick for mobile
 ├── assets/
 │   ├── ASSET_SOURCES.md       # Asset sources and licences (many still unknown)
 │   ├── atlas/                 # terrain_atlas.png (trees/stones source) + Attribution.txt
@@ -72,6 +78,7 @@ releaf/
 ├── tools/                     # Dev tooling, .gdignore'd (invisible to Godot), see "Art Pipeline"
 │   ├── STYLE_ANALYSIS.md      # Art style analysis, required reading before making assets
 │   └── assets_gen/            # Python+Pillow asset generators (output/ is git-ignored)
+├── icon.png                   # App icon (generated, see "Art Pipeline")
 ├── project.godot              # Godot project settings, autoloads, input map
 ├── export_presets.cfg         # Export presets
 ├── AGENTS.md                  # Agent instructions (auto-loaded)
@@ -83,8 +90,8 @@ releaf/
 | Autoload | Path | Purpose |
 |----------|------|---------|
 | `Global` | `core/autoloads/Global.gd` | Layer enums (`OBSTACLE`, `FIREABLE`, `ITEM`, `FIRE`, `TREE`, `STONE`, `WATER`) and layer masks |
-| `Events` | `core/autoloads/Events.gd` | Global signal bus — all command signals (spawn, destroy, pick, plant, burn, quench, select) |
-| `Settings` | `core/autoloads/Settings.gd` | World constants: `INIT_SEEDS=20`, `INIT_ITEMS=20`, `get_world_rect()` returns `Rect2(-1600, -960, 3200, 1920)` |
+| `Events` | `core/autoloads/Events.gd` | Global signal bus — all command signals (spawn, destroy, pick, plant, burn, quench, select, use) and `player_state_changed` |
+| `Settings` | `core/autoloads/Settings.gd` | World and balance constants: item counts, health, tank, `STOCK_LIMITS`, `STOCK_START`; `get_world_rect()` returns `Rect2(-1600, -960, 3200, 1920)` |
 
 ## Command System
 
@@ -105,7 +112,8 @@ All game actions go through a **command pattern**:
 | `ItemDestroyCommand` | `item_destroy_command` | World |
 | `PickItemCommand` | `pick_item_command` | World |
 | `PlantTreeCommand` | `plant_tree_command` | World |
-| `SelectItemCommand` | `select_item_command` | Player |
+| `SelectToolCommand` | `select_tool_command` | Player |
+| `UseItemCommand` | `use_item_command` | Player |
 
 ## Physics Layers
 
@@ -129,13 +137,17 @@ All game actions go through a **command pattern**:
 | `ui_down` | S / Down | D-pad down, Left stick Y+ |
 | `ui_accept` | Enter / Space | Button 0 (A) |
 
+Touch controls drive the same actions (see [UI/HUD](#uihud)).
+
 ## Player Mechanics
 
-- **Movement**: WASD/arrows, speed 200 px/s
-- **Items**: Press `1` for Seed, `2` for Extinguisher
-- **Plant tree**: Select Seed + press `ui_accept` (Enter/Space)
-- **Extinguish fire**: Select Extinguisher + hold `ui_accept` near fire
-- **Pick up items**: Walk into items with ActionBox (Area2D)
+- **Movement**: WASD/arrows, gamepad or virtual joystick, up to 200 px/s. Polled in `_physics_process` because the joystick changes action state without sending input events. `move_and_slide` in floating mode, so the player slides along obstacles
+- **Tools**: Always available. Press `1` for Shovel, `2` for Extinguisher, or tap a tool slot. All of them go through `SelectToolCommand`
+- **Plant tree**: Select Shovel + press `ui_accept` (Enter/Space/action button). Spends one seed, does nothing without seeds
+- **Extinguish fire**: Select Extinguisher + hold `ui_accept` near fire. A full tank lasts 20 s of spraying
+- **Pick up items**: Walk into items with ActionBox (Area2D). Items go into stock; at the stock limit they stay on the ground, where fire can burn them, and are picked up once there is room and they are still in reach
+- **Automatic items**: An empty tank loads a refill (1 s, no spraying meanwhile). A medkit is used at 30 health or below, restoring 50. Both also trigger right after pick-up if needed
+- **Health**: 100 at start, fire deals 10 per second while the player is inside it. No death yet: health stops at 1 (`Settings.MIN_HEALTH`)
 - **Camera**: Camera2D with 2x zoom, follows player
 
 ## World Generation
@@ -166,17 +178,28 @@ All game actions go through a **command pattern**:
 
 ## Item Types
 
-| Type | Texture | Purpose |
+Tools (`PlayerTool.Type`) are always with the player and selected in the HUD. Items (`Item.Type`) lie in the world, are collected into a stock and are never selected. Rule of thumb: if the player decides where and when to apply it, it is a tool, otherwise an item.
+
+| Tool | Texture | Purpose |
 |------|---------|---------|
-| `Seed` | `seed.png` | Plant trees |
-| `Heart` | `heart.png` | (not yet implemented) |
-| `IceCream` | `icecream.png` | (not yet implemented) |
-| `Extinguisher` | `extinguisher.png` | Extinguish fires |
+| `Shovel` | `shovel.png` | Plant a tree, spends a seed |
+| `Extinguisher` | `extinguisher_v2.png` | Extinguish fires, spends the tank |
+
+| Item | Texture | Start | Limit | Purpose |
+|------|---------|-------|-------|---------|
+| `Seed` | `seed.png` | 5 | 20 | Spent by the shovel |
+| `Refill` | `refill.png` | 1 | 5 | Fills the tank when it runs out |
+| `Medkit` | `medkit.png` | 1 | 3 | Restores health when it is low |
 
 ## UI/HUD
 
-- `CanvasLayer` with touch controls
-- `TouchScreenJoystick` (left side) for movement
-- `ActionButton` (right side) for context action
-- Seed and Extinguisher buttons to switch active item
+`CanvasLayer` with touch controls, laid out from code in `ui.gd`. Sizes are in units of a 720 px short side and scale with `min(width, height) / 720`; on mobile they keep clear of notches and gesture bars via the display safe area.
+
+- **`Joystick`** (`VirtualJoystick`): floats, appearing under the thumb anywhere in the left half of the screen, and rests translucent in the bottom left corner. The base follows the thumb past the rim. Speed depends on tilt: below 12% of travel nothing moves, then strength ramps from 35% to 100% at 70% of travel
+- **`ActionButton`** (`TouchButton`, bottom right): holds `ui_accept` until its finger lifts, even if the thumb slides off. Its icon shows the selected tool and dims when the tool can't act; with the extinguisher, pips around it show the tank
+- **`Shovel`, `Extinguisher`** (`TouchButton`): tool slots fanned out around the action button, the selected one has a gold ring. Slots are placed from the `slots` dictionary in `ui.gd`, but the current arc (`SLOT_ARC_DEGREES`, `SLOT_DISTANCE`) fits only 2: slots are 84 wide with a 56 hit radius, so neighbours need about 112 between centres, and 3 slots here get 78
+- **`StatusPanel`** (top left): health bar and the count of each item; a count at its limit turns gold. Digits come from a sprite sheet, the project has no font
+- **Selection flow**: slots and keys send `SelectToolCommand`, the player handles it, and the HUD updates from `select_tool_processed`. Everything else on screen follows `Events.player_state_changed`
+- **Visibility**: touch controls hide on keyboard or gamepad buttons and return on the next touch; `StatusPanel` always stays
+- **Desktop testing**: `pointing/emulate_touch_from_mouse` is on, so the mouse acts as a single finger
 

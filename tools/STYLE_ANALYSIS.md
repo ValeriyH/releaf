@@ -8,26 +8,20 @@
 |---|---|---|---|---|---|
 | `assets/atlas/terrain_atlas.png` (земля, дерева, камені, вода, кущі) | 1024×1024, сітка 16 px, об'єкти 30–96 px | 459 | немає чистого чорного; темніший відтінок власного кольору (`#004337`, `#322125`) | зверху-ліворуч, 3–5 тонів на матеріал | 7 322 напівпрозорих пікселів (м'які краї) |
 | `objects/player/player.png` (лис, 6 кадрів 33×32) | 198×32 | 6 | суцільний холодний темний `#322C43` | пласке, без градієнтів | лише 6 кольорів: `#B5422D #E87838 #F0B989 #A36F4E #322C43 #FFF` |
-| `objects/item/res/seed.png` | 32×32 | 4 | теплий темний `#3D2A1C` | пласке | у стилі лиса |
-| `objects/item/res/heart.png` | 32×32 | 5 | немає, лише 5 відтінків червоного | градієнт-блік | палітра Material (`#C62828…`) |
-| `objects/item/res/icecream.png` | 32×32 | 4 | **чистий чорний `#000000`** | пласке | Material-кольори (`#EF9A9A`, `#D50000`) |
-| `objects/item/res/extinguisher.png` | 19×41 | 12 | **чистий чорний `#000000`** | є бліки | інший масштаб, 12 кольорів |
 | `objects/fire/res/fire.png` (12×6 кадрів) | 1024×512 | 78 648 | немає | розмитий рендер | **усі 120 039 пікселів напівпрозорі**; зовсім не піксель-арт |
 | фон `core/background.gd` (процедурний) | 32×32 | ~нескінченно | немає | випадковий шум ±0.02 до кольору | плоскі кольори, не з атласу |
 
 ## 2. Що найкраще тримається купи
 
-**Ядро стилю** — `terrain_atlas` + лис + `seed`:
+**Ядро стилю** — `terrain_atlas` + лис:
 - справжній піксель-арт з жорсткими краями, без згладжування;
 - контури кольорові (темніший відтінок), чистого чорного немає;
 - світло зверху-ліворуч, тіні знизу-праворуч;
 - теплі землисті відтінки; зелені `#2F8136 / #64A42C / #004337` і коричневі `#7D4D35 / #9B673A / #B98650` повторюються між ассетами.
 
 **Вибиваються** (за зростанням проблеми):
-1. `heart` — лише палітра Material, стиль пікселів підходить; потрібен перефарб.
-2. `icecream`, `extinguisher` — чорний контур і Material-кольори; потрібен перефарб контуру і заливки.
-3. `fire` — розмитий напівпрозорий рендер, найбільш чужорідний; варто замінити на піксель-арт-анімацію (4–8 кадрів, 3–4 кольори з ряду `f1/f2/f3`) або принаймні постеризувати.
-4. Фон у `background.gd` — плоскі кольори без контурів; саме його замінює згенерований тайлсет.
+1. `fire` — розмитий напівпрозорий рендер, найбільш чужорідний; варто замінити на піксель-арт-анімацію (4–8 кадрів, 3–4 кольори з ряду `f1/f2/f3`) або принаймні постеризувати.
+2. Фон у `background.gd` — плоскі кольори без контурів; саме його замінює згенерований тайлсет.
 
 **Розмір тайла**: лишаємо **32×32**. Так вже працюють `background.gd` (`TILE_SIZE = 32`), світ 3200×1920 (100×60 тайлів) і всі спрайти предметів/лиса (32 px). Атласна земля намальована на сітці 16 px, тож 32-піксельні тайли складаються з 4 чвертей 16×16 — саме так будується автотайлінг.
 
@@ -47,9 +41,6 @@
 Файли: `output/palette.gpl` (Aseprite/GIMP/Krita) і `output/palette.png` з'являться після запуску скрипта.
 
 Рекомендовані перефарбування (не виконувалось, оригінали не чіпав):
-- `heart` → `#8A2E24` (контур, з `f1` темніше) · `#B5422D` · `#E87838` (блік);
-- `icecream` → контур `#322C43`, кулька `#D95F6B`, ріжок `#F0B989`/`#B98650`;
-- `extinguisher` → корпус `#B5422D`, контур `#322C43`, метал `#806F66/#A89A8F`;
 - `fire` → піксель-анімація з `f1 → f2 → f3 → #FFFFFF` (серцевина).
 
 ## 4. Тайлсет
@@ -70,6 +61,7 @@
 
 ## Art Pipeline
 - Generators (Python + Pillow) live in `tools/assets_gen/`; `tools/` is `.gdignore`d and `tools/assets_gen/output/` is **git-ignored** (scratch results). Nothing in the game may reference `tools/`. Approved results are copied by hand into `assets/` or `objects/`.
-- Generated and approved so far: `assets/tilesets/releaf_tileset.{png,tres}`, `assets/palette/`, `objects/item/res/extinguisher_v2.png` (the old `extinguisher.png` is no longer referenced).
+- Generated and approved so far: `assets/tilesets/releaf_tileset.{png,tres}`, `assets/palette/`, `icon.png` (64x64 art shown at 4x, from `generate_icon.py`), `objects/item/res/extinguisher_v2.png`, `ui/hud/res/` (touch controls and digits, from `generate_touch_controls.py`; drawn at 3x with nearest filtering), `objects/player/res/shovel.png`, `objects/item/res/seed.png`, `objects/item/res/refill.png`, `objects/item/res/medkit.png` (from `generate_items.py`). The seed is an acorn drawn from scratch, not derived from the old pine cone. The medkit cross is green on purpose: the red cross on white is a protected emblem.
 - **Palette "Releaf32"** (`assets/palette/palette.gpl`): 32 colours. New art should use only these, dark warm outline (`#342116`), light from top-left, no pure black.
-- Still off-style: `heart`, `icecream`, `fire`. Licence/source of most assets is unknown, see `assets/ASSET_SOURCES.md`.
+- `heart`, `icecream`, the old `seed` and the old `extinguisher` were removed or replaced because their source is unknown.
+- Still off-style: `fire`. Licence/source of most assets is unknown, see `assets/ASSET_SOURCES.md`.

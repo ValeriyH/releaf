@@ -4,7 +4,6 @@
 
 | Компонент | Шлях | Автор | Ліцензія | Підтвердження |
 |---|---|---|---|---|
-| Touch Screen Joystick (аддон) | `addons/touch_screen_joystick/` | Kent Coyoca | MIT | `addons/touch_screen_joystick/LICENSE.md` |
 | Godot Engine 4.6 | — | Godot contributors | MIT | https://godotengine.org/license |
 
 ## Інші ассети що використовуються в проекті
@@ -15,7 +14,6 @@
 | Лис (гравець) | `objects/player/player.png` | ansimuz, «SunnyLand – Free Pixel Game Art Assets Pack», https://ansimuz.itch.io/sunny-land-pixel-game-art | CC0 1.0 (на 2026-10-30) | Не вимагається (CC0); автора варто згадати в Credits | 6 кадрів 33×32. |
 | Анімація вогню | `objects/fire/res/fire.png` | tauran https://opengameart.org/content/animated-flame-texture | CC0 | Не вимагається (CC0); автора варто згадати в Credits | 12×6 кадрів, 1024×512 |
 | Звук вогню та горіння | `objects/fire/res/fire.wav`, `burn.wav` | PagDev https://opengameart.org/content/fireplace-sound-loop | CC0| Не вимагається (CC0); автора варто згадати в Credits | |
-| Іконка проєкту | `icon.svg` | стандартна іконка Godot | CC BY 4.0 |  Godot |  |
 
 ## Правила додавання в таблицю
 
