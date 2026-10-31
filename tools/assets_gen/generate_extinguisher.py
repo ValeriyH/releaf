@@ -3,7 +3,6 @@
 
 Usage:  python generate_extinguisher.py        (requires: pip install pillow)
 Output: output/extinguisher.png and output/extinguisher_x8.png (preview).
-The original objects/item/res/extinguisher.png is not touched.
 """
 from pathlib import Path
 
@@ -15,7 +14,7 @@ HERE = Path(__file__).resolve().parent
 OUT = HERE / "output"
 
 LEGEND = {
-	"O": "d0",  # outline (same warm dark as the seed sprite)
+	"O": "d0",  # warm dark outline
 	"R": "f1",  # body red
 	"H": "f2",  # light rim on the body (light from the top-left)
 	"S": "d2",  # shaded side of the body
