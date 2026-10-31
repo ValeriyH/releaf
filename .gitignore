@@ -16,5 +16,12 @@ export_credentials.cfg
 data_*/
 mono_crash.*.json
 
-# Local asset generators (output is copied into assets/ and objects/ by hand)
-tools/tileset_gen/
+# Generator output (approved results are copied into assets/ and objects/ by hand)
+tools/assets_gen/output/
+
+.obsidian/app.json
+.obsidian/appearance.json
+.obsidian/graph.json
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/plugins/*/data.json

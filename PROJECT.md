@@ -2,7 +2,7 @@
 
 A 2D top-down Godot 4 game where the player manages a forest: planting trees, extinguishing fires, and collecting items.
 
-> **Note**: `AGENTS.md` auto-loads at session start and instructs the agent to read this file.
+> **Note**: [AGENTS.md](AGENTS.md) auto-loads at session start and instructs the agent to read this file.
 
 ## Tech Stack
 
@@ -37,19 +37,24 @@ releaf/
 ├── objects/
 │   ├── player/
 │   │   ├── player.gd          # CharacterBody2D, WASD movement, item interaction
-│   │   └── player.tscn        # Camera2D (zoom 2x), AnimatedSprite2D, ActionBox, HitBox
+│   │   ├── player.tscn        # Camera2D (zoom 2x), AnimatedSprite2D, ActionBox, HitBox
+│   │   └── player.png         # Player sprite sheet
 │   ├── tree/
 │   │   ├── tree.gd            # StaticBody2D, sway animation, burn logic
-│   │   └── tree.tscn          # Crown + Root sprites, FireParticles
+│   │   ├── tree.tscn          # Crown + Root sprites, FireParticles
+│   │   └── res/               # AtlasTexture resources: tree1/2, root, burned (.tres)
 │   ├── stone/
 │   │   ├── stone.gd           # StaticBody2D, random stone variant
-│   │   └── stone.tscn
+│   │   ├── stone.tscn
+│   │   └── stone1/2.tres      # AtlasTexture resources for stone variants
 │   ├── fire/
 │   │   ├── fire.gd            # CharacterBody2D, AI movement, burns items/trees
-│   │   └── fire.tscn          # AnimatedSprite2D, Hitbox, BurnRadius, timers
+│   │   ├── fire.tscn          # AnimatedSprite2D, Hitbox, BurnRadius, timers
+│   │   └── res/               # fire.png, fire.wav, burn.wav
 │   └── item/
 │       ├── item.gd            # Area2D, types: Seed, Heart, IceCream, Extinguisher
-│       └── item.tscn
+│       ├── item.tscn
+│       └── res/               # seed, heart, icecream, extinguisher (old), extinguisher_v2 (.png)
 ├── ui/
 │   ├── hud/
 │   │   ├── ui.gd              # HUD script (seed/extinguisher buttons)
@@ -57,13 +62,20 @@ releaf/
 │   └── main_menu/             # Empty (not implemented)
 ├── addons/
 │   └── touch_screen_joystick/ # Virtual joystick for mobile
-└── assets/
-    ├── ASSET_SOURCES.md       # Asset sources and licences (many still unknown)
-    ├── atlas/                 # Texture atlases
-    ├── tilesets/              # releaf_tileset.png/.tres (terrain autotiling, Releaf32 palette)
-    ├── palette/               # Releaf32 palette (.gpl, .png)
-    ├── audio/                 # Sound effects
-    └── fonts/                 # Fonts
+├── assets/
+│   ├── ASSET_SOURCES.md       # Asset sources and licences (many still unknown)
+│   ├── atlas/                 # terrain_atlas.png (trees/stones source) + Attribution.txt
+│   ├── tilesets/              # releaf_tileset.png/.tres (terrain autotiling, Releaf32 palette)
+│   ├── palette/               # Releaf32 palette (.gpl, .png)
+│   ├── audio/                 # Sound effects (currently empty)
+│   └── fonts/                 # Fonts (currently empty)
+├── tools/                     # Dev tooling, .gdignore'd (invisible to Godot), see "Art Pipeline"
+│   ├── STYLE_ANALYSIS.md      # Art style analysis, required reading before making assets
+│   └── assets_gen/            # Python+Pillow asset generators (output/ is git-ignored)
+├── project.godot              # Godot project settings, autoloads, input map
+├── export_presets.cfg         # Export presets
+├── AGENTS.md                  # Agent instructions (auto-loaded)
+└── PROJECT.md                 # This file
 ```
 
 ## Autoloads (Singletons)
@@ -168,9 +180,3 @@ All game actions go through a **command pattern**:
 - `ActionButton` (right side) for context action
 - Seed and Extinguisher buttons to switch active item
 
-## Art Pipeline
-
-- Generators (Python + Pillow) live in `tools/tileset_gen/`, which is **git-ignored and `.gdignore`d**: it is a local scratch folder only. Nothing in the project may reference it. Approved results are copied by hand into `assets/` or `objects/`.
-- Generated and approved so far: `assets/tilesets/releaf_tileset.{png,tres}`, `assets/palette/`, `objects/item/res/extinguisher_v2.png` (the old `extinguisher.png` is no longer referenced).
-- **Palette "Releaf32"** (`assets/palette/palette.gpl`): 32 colours. New art should use only these, dark warm outline (`#342116`), light from top-left, no pure black.
-- Still off-style: `heart`, `icecream`, `fire`. Licence/source of most assets is unknown, see `assets/ASSET_SOURCES.md`.
