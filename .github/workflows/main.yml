@@ -64,6 +64,11 @@ jobs:
           mkdir -p out/release/HTML5
           ./godot.exec --export-release "Web" out/release/HTML5/index.html --headless --quit
 
+      - name: Set PWA id
+        run: |
+          m=out/release/HTML5/index.manifest.json
+          jq '. + {id: "releaf"}' $m > $m.tmp && mv $m.tmp $m
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
