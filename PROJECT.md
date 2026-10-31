@@ -11,6 +11,21 @@ A 2D top-down Godot 4 game where the player manages a forest: planting trees, ex
 - **Physics**: Godot 2D physics
 - **Resolution**: 1280x720, stretch mode `canvas_items`, aspect `expand` (wide and tall screens see more of the world, no black bars)
 - **Orientation on handhelds**: sensor landscape
+- **Running Godot from the terminal**: use the `GODOT` environment variable (points to the console executable, e.g. `& $env:GODOT --headless --path . --check-only`).
+
+## Web / PWA
+
+- Export preset `Web` in `export_presets.cfg`: PWA enabled, standalone, landscape, no threads (no special server headers needed)
+- Local export: `mkdir build; & $env:GODOT --headless --path . --export-release Web build/index.html` (`build/` is git-ignored, the folder must exist)
+- Deploy: `.github/workflows/main.yml` exports `Web` and publishes to GitHub Pages on push to `main`
+
+## Development with Claude Code
+
+Parts of this project are developed with [Claude Code](https://claude.com/claude-code). To see what came from it:
+
+- Commits made by an AI agent have the `[AI]` prefix in the subject
+- Pull request descriptions created by Claude Code end with a `Generated with Claude Code` line
+- Commits don't carry a `Co-Authored-By` line (`attribution.commit` is empty in the Claude Code settings)
 
 ## Directory Structure
 
@@ -73,6 +88,7 @@ releaf/
 │   ├── atlas/                 # terrain_atlas.png (trees/stones source) + Attribution.txt
 │   ├── tilesets/              # releaf_tileset.png/.tres (terrain autotiling, Releaf32 palette)
 │   ├── palette/               # Releaf32 palette (.gpl, .png)
+│   ├── icons/                 # PWA icons 144/180/512 (from icon.png: 512 nearest, others Lanczos)
 │   ├── audio/                 # Sound effects (currently empty)
 │   └── fonts/                 # Fonts (currently empty)
 ├── tools/                     # Dev tooling, .gdignore'd (invisible to Godot), see "Art Pipeline"

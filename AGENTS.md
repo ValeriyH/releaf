@@ -4,7 +4,8 @@
 - This is a Godot 4 GDScript project. Follow existing code style and patterns.
 - The command pattern is used for all game actions — see [PROJECT.md](Project.md) for details.
 - **Ask the user** if [PROJECT.md](Project.md) needs updating and what is planning update.
-- **Agents never commit.** Do not run `git commit` (or push/merge); leave all changes uncommitted in the working tree for the user to review and commit themselves.
+- Be concise: in replies and in docs/comments, state only what an agent can't infer on its own. No rationale or filler.
+- **Agents never change git state** (commit, push, merge, branches) without an explicit request from the user. Leave changes uncommitted in the working tree.
 
 # References
 

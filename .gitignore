@@ -25,3 +25,5 @@ tools/assets_gen/output/
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
 .obsidian/plugins/*/data.json
+# Web export output
+build/
