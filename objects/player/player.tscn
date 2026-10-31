@@ -79,6 +79,7 @@ colors = PackedColorArray(0.5529412, 0.84313726, 0.98039216, 1, 1, 1, 1, 0)
 [node name="Player" type="CharacterBody2D" unique_id=98190796]
 z_index = 1
 collision_layer = 3
+motion_mode = 1
 script = ExtResource("1_ssrue")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=277488481]
