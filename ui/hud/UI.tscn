@@ -1,19 +1,31 @@
 [gd_scene format=3 uid="uid://dpxotobfy36df"]
 
 [ext_resource type="Script" uid="uid://di5kkk5j82hjw" path="res://ui/hud/ui.gd" id="1_w16w6"]
-[ext_resource type="Script" path="res://ui/hud/virtual_joystick.gd" id="2_joystick"]
-[ext_resource type="Script" path="res://ui/hud/touch_button.gd" id="3_button"]
-[ext_resource type="Texture2D" path="res://objects/item/res/extinguisher_v2.png" id="2_scbgu"]
-[ext_resource type="Texture2D" path="res://objects/player/res/shovel.png" id="3_po8vy"]
-[ext_resource type="Script" path="res://ui/hud/status_panel.gd" id="11_status"]
-[ext_resource type="Texture2D" path="res://ui/hud/res/digits.png" id="12_digits"]
-[ext_resource type="Texture2D" path="res://ui/hud/res/joystick_base.png" id="4_base"]
-[ext_resource type="Texture2D" path="res://ui/hud/res/joystick_knob.png" id="5_knob"]
-[ext_resource type="Texture2D" path="res://ui/hud/res/action_button.png" id="6_action"]
-[ext_resource type="Texture2D" path="res://ui/hud/res/action_button_pressed.png" id="7_action_pressed"]
-[ext_resource type="Texture2D" path="res://ui/hud/res/slot.png" id="8_slot"]
-[ext_resource type="Texture2D" path="res://ui/hud/res/slot_pressed.png" id="9_slot_pressed"]
-[ext_resource type="Texture2D" path="res://ui/hud/res/slot_selected.png" id="10_slot_selected"]
+[ext_resource type="Script" uid="uid://dbjwy18dcvujp" path="res://ui/hud/virtual_joystick.gd" id="2_joystick"]
+[ext_resource type="Texture2D" uid="uid://mr0lc7xefkwl" path="res://objects/item/res/extinguisher_v2.png" id="2_scbgu"]
+[ext_resource type="Script" uid="uid://cpvblsktg5qfv" path="res://ui/hud/touch_button.gd" id="3_button"]
+[ext_resource type="Texture2D" uid="uid://boe26rrlqyse" path="res://objects/player/res/shovel.png" id="3_po8vy"]
+[ext_resource type="Texture2D" uid="uid://cxd2jckhkpev" path="res://ui/hud/res/joystick_base.png" id="4_base"]
+[ext_resource type="Texture2D" uid="uid://b0l7j8ewle6nu" path="res://ui/hud/res/joystick_knob.png" id="5_knob"]
+[ext_resource type="Texture2D" uid="uid://36a8xoh06hol" path="res://ui/hud/res/action_button.png" id="6_action"]
+[ext_resource type="Texture2D" uid="uid://dqu3bmrh256dg" path="res://ui/hud/res/action_button_pressed.png" id="7_action_pressed"]
+[ext_resource type="Texture2D" uid="uid://2vwydpibyt7y" path="res://ui/hud/res/slot.png" id="8_slot"]
+[ext_resource type="Texture2D" uid="uid://bnv5fi44ov5fm" path="res://ui/hud/res/slot_pressed.png" id="9_slot_pressed"]
+[ext_resource type="Texture2D" uid="uid://cuc5ns0m8gq2v" path="res://ui/hud/res/slot_selected.png" id="10_slot_selected"]
+[ext_resource type="Script" uid="uid://82wmvq4fklea" path="res://ui/hud/status_panel.gd" id="11_status"]
+[ext_resource type="Texture2D" uid="uid://roj3f08bfxi0" path="res://ui/hud/res/digits.png" id="12_digits"]
+[ext_resource type="Script" uid="uid://css6x8swh1le8" path="res://ui/hud/tree_panel.gd" id="13_tree_panel"]
+[ext_resource type="Texture2D" path="res://ui/hud/res/tree_icon.tres" id="14_tree"]
+[ext_resource type="Script" path="res://ui/hud/end_screen.gd" id="15_win"]
+[ext_resource type="Texture2D" path="res://ui/hud/res/lose_title.png" id="22_lose_title"]
+[ext_resource type="Texture2D" path="res://ui/hud/res/lose_player.png" id="23_lose_player"]
+[ext_resource type="Texture2D" path="res://ui/hud/res/lose_forest.png" id="24_lose_forest"]
+[ext_resource type="Texture2D" path="res://ui/hud/res/win_title.png" id="16_win_title"]
+[ext_resource type="Texture2D" path="res://ui/hud/res/win_question.png" id="17_win_question"]
+[ext_resource type="Texture2D" path="res://ui/hud/res/win_continue.png" id="18_win_continue"]
+[ext_resource type="Texture2D" path="res://ui/hud/res/win_menu.png" id="19_menu_label"]
+[ext_resource type="Texture2D" path="res://ui/hud/res/icon_continue.png" id="20_icon_continue"]
+[ext_resource type="Texture2D" path="res://ui/hud/res/icon_menu.png" id="21_icon_menu"]
 
 [node name="CanvasLayer" type="CanvasLayer" unique_id=294099641]
 script = ExtResource("1_w16w6")
@@ -22,6 +34,12 @@ script = ExtResource("1_w16w6")
 texture_filter = 1
 position = Vector2(16, 16)
 script = ExtResource("11_status")
+digits_texture = ExtResource("12_digits")
+
+[node name="TreePanel" type="Node2D" parent="." unique_id=1720441197]
+texture_filter = 1
+script = ExtResource("13_tree_panel")
+icon = ExtResource("14_tree")
 digits_texture = ExtResource("12_digits")
 
 [node name="Joystick" type="Node2D" parent="." unique_id=348628100]
@@ -59,5 +77,54 @@ texture_pressed = ExtResource("9_slot_pressed")
 texture_selected = ExtResource("10_slot_selected")
 icon = ExtResource("2_scbgu")
 
+[node name="WinScreen" type="Node2D" parent="." unique_id=1580042919]
+process_mode = 3
+visible = false
+texture_filter = 1
+script = ExtResource("15_win")
+title_texture = ExtResource("16_win_title")
+messages = Array[Texture2D]([ExtResource("17_win_question")])
+continue_label = ExtResource("18_win_continue")
+menu_label = ExtResource("19_menu_label")
+
+[node name="Continue" type="Node2D" parent="WinScreen" unique_id=1580042920]
+texture_filter = 1
+script = ExtResource("3_button")
+texture = ExtResource("8_slot")
+texture_pressed = ExtResource("9_slot_pressed")
+texture_selected = ExtResource("10_slot_selected")
+icon = ExtResource("20_icon_continue")
+icon_scale = 3.0
+
+[node name="Menu" type="Node2D" parent="WinScreen" unique_id=1580042921]
+texture_filter = 1
+script = ExtResource("3_button")
+texture = ExtResource("8_slot")
+texture_pressed = ExtResource("9_slot_pressed")
+texture_selected = ExtResource("10_slot_selected")
+icon = ExtResource("21_icon_menu")
+icon_scale = 3.0
+
+[node name="LoseScreen" type="Node2D" parent="." unique_id=1580042922]
+process_mode = 3
+visible = false
+texture_filter = 1
+script = ExtResource("15_win")
+title_texture = ExtResource("22_lose_title")
+messages = Array[Texture2D]([ExtResource("23_lose_player"), ExtResource("24_lose_forest")])
+menu_label = ExtResource("19_menu_label")
+
+[node name="Menu" type="Node2D" parent="LoseScreen" unique_id=1580042923]
+texture_filter = 1
+script = ExtResource("3_button")
+texture = ExtResource("8_slot")
+texture_pressed = ExtResource("9_slot_pressed")
+texture_selected = ExtResource("10_slot_selected")
+icon = ExtResource("21_icon_menu")
+icon_scale = 3.0
+
 [connection signal="pressed" from="Shovel" to="." method="on_shovel_pressed"]
 [connection signal="pressed" from="Extinguisher" to="." method="on_extinguisher_pressed"]
+[connection signal="pressed" from="WinScreen/Continue" to="WinScreen" method="on_continue_pressed"]
+[connection signal="pressed" from="WinScreen/Menu" to="WinScreen" method="on_menu_pressed"]
+[connection signal="pressed" from="LoseScreen/Menu" to="LoseScreen" method="on_menu_pressed"]

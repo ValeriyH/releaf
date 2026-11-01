@@ -46,10 +46,14 @@ var finger: = -1
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
-		if event.pressed and finger == -1 and to_local(event.position).length() <= hit_radius:
+		if event.pressed and finger == -1 and is_visible_in_tree() and hits(to_local(event.position)):
 			press(event.index)
 		elif not event.pressed and event.index == finger:
 			release()
+
+
+func hits(local_point: Vector2) -> bool:
+	return local_point.length() <= hit_radius
 
 
 func _notification(what: int) -> void:

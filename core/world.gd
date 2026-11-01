@@ -2,17 +2,51 @@ extends Node2D
 
 @onready var ItemRes: PackedScene = preload("res://objects/item/item.tscn")
 @onready var TreeRes: PackedScene = preload("res://objects/tree/tree.tscn")
+@onready var FireRes: PackedScene = preload("res://objects/fire/fire.tscn")
 
 const Items := Item.Type
 const Status: = Command.ExecutionStatus
+const FIRE_MIN_START_DISTANCE: = 400.0 # From the player
+
+var won: = false # The player may keep playing after a win, it is announced once
 
 func _ready() -> void:
 	randomize()
 	create_border()
 	create_initial_items()
+	adjust_fire_count()
 	Events.item_spawn_command.connect(on_item_spawn_command)
 	Events.item_destroy_command.connect(on_item_destroy_command)
 	Events.plant_tree_command.connect(on_plant_tree_command)
+	Events.tree_grown.connect(on_tree_grown)
+	Events.burn_processed.connect(on_burn_processed)
+
+# The fires placed in the scene are the base, the setting removes some or adds random ones
+func adjust_fire_count() -> void:
+	var wanted: = int(Settings.fire_count)
+	while $Enemies.get_child_count() > wanted:
+		var fire: = $Enemies.get_child($Enemies.get_child_count() - 1)
+		$Enemies.remove_child(fire)
+		fire.queue_free()
+	var world_size: = Settings.get_world_rect()
+	while $Enemies.get_child_count() < wanted:
+		var pos: = Vector2(
+			randf_range(world_size.position.x, world_size.end.x),
+			randf_range(world_size.position.y, world_size.end.y)
+		)
+		if not $Background.is_water(pos) and pos.distance_to($Player.global_position) >= FIRE_MIN_START_DISTANCE:
+			var fire: Node2D = FireRes.instantiate()
+			$Enemies.add_child(fire)
+			fire.global_position = pos
+
+func on_burn_processed(_cmd: BurnCommand) -> void:
+	if get_tree().get_node_count_in_group(Global.LIVING_TREES_GROUP) == 0:
+		Events.game_lost.emit(Global.LoseReason.FOREST_BURNED)
+
+func on_tree_grown() -> void:
+	if not won and get_tree().get_node_count_in_group(Global.GROWN_TREES_GROUP) >= Settings.trees_to_win:
+		won = true
+		Events.game_won.emit()
 
 func create_border() -> void:
 	#set default background to black (outside map)
@@ -49,10 +83,11 @@ func create_initial_items() -> void:
 			randf_range(world_size.position.y, world_size.end.y)
 		)
 	
-	for i in range(Settings.INIT_SEEDS):
+	var seeds: = int(Settings.items_at_start) / 2
+	for i in range(seeds):
 		create_item(Items.Seed, random_vector.call())
-	
-	for i in range(Settings.INIT_ITEMS):
+
+	for i in range(int(Settings.items_at_start) - seeds):
 		var item: Items = Items[Items.keys().pick_random()]
 		create_item(item, random_vector.call())
 
@@ -83,6 +118,7 @@ func on_item_destroy_command(context: ItemDestroyCommand) -> void:
 func on_plant_tree_command(cmd: PlantTreeCommand) -> void:
 	var tree: Node2D = TreeRes.instantiate() as Node2D
 	if tree:
+		tree.grown = false
 		$Nature.add_child(tree)
 		tree.global_position = cmd.position
 		cmd.set_completed()

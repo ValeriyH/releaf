@@ -1,3 +1,4 @@
+class_name Background
 extends Node2D
 ## Generates the world background with grass, roads, a pond and decor
 ## from the unified tileset in assets/tilesets.
@@ -14,6 +15,9 @@ const TERRAIN_WATER := 2
 const GRASS_VARIANTS := 4
 const FLOWER_TILES := [Vector2i(4, 0), Vector2i(5, 0), Vector2i(6, 0), Vector2i(7, 0)]
 const TUFT_TILES := [Vector2i(0, 1), Vector2i(1, 1)]
+
+const POND_CENTERS := [Vector2(0.8, 0.2), Vector2(0.2, 0.8)] # Fractions of the world size
+const POND_RADIUS := Vector2(8.5, 5.5) # In tiles. Not whole numbers: those leave a one-tile spike on each side
 
 var world_rect: Rect2i
 var tilemap: TileMapLayer
@@ -41,16 +45,38 @@ func generate_background() -> void:
 	tilemap.set_cells_terrain_connect(_road_cells(tiles_x, tiles_y), TERRAIN_SET, TERRAIN_ROAD)
 	_scatter_decor(tiles_x, tiles_y, 0.03, FLOWER_TILES)
 	_scatter_decor(tiles_x, tiles_y, 0.05, TUFT_TILES)
+	_create_water_body()
+
+## Blocks only what masks the WATER layer: fires stay out, the player walks in.
+func _create_water_body() -> void:
+	var body := StaticBody2D.new()
+	body.collision_layer = 0
+	body.collision_mask = 0
+	body.set_collision_layer_value(Global.Layer.WATER, true)
+	tilemap.add_child(body)
+	var shape := RectangleShape2D.new()
+	shape.size = Vector2.ONE * TILE_SIZE
+	for cell in tilemap.get_used_cells():
+		var data := tilemap.get_cell_tile_data(cell)
+		if data.terrain == TERRAIN_WATER:
+			var col := CollisionShape2D.new()
+			col.shape = shape
+			col.position = tilemap.map_to_local(cell)
+			body.add_child(col)
+
+func is_water(world_position: Vector2) -> bool:
+	var data := tilemap.get_cell_tile_data(tilemap.local_to_map(tilemap.to_local(world_position)))
+	return data != null and data.terrain == TERRAIN_WATER
 
 func _pond_cells(tiles_x: int, tiles_y: int) -> Array[Vector2i]:
 	var cells: Array[Vector2i] = []
-	var center := Vector2(tiles_x * 4 / 5, tiles_y / 5)
-	var radius := Vector2(7, 4)
-	for tx in range(tiles_x):
-		for ty in range(tiles_y):
-			var d := (Vector2(tx, ty) - center) / radius
-			if d.length_squared() <= 1.0:
-				cells.append(Vector2i(tx, ty))
+	for fraction: Vector2 in POND_CENTERS:
+		var center := (fraction * Vector2(tiles_x, tiles_y)).round()
+		for tx in range(tiles_x):
+			for ty in range(tiles_y):
+				var d := (Vector2(tx, ty) - center) / POND_RADIUS
+				if d.length_squared() <= 1.0:
+					cells.append(Vector2i(tx, ty))
 	return cells
 
 func _road_cells(tiles_x: int, tiles_y: int) -> Array[Vector2i]:

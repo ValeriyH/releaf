@@ -20,6 +20,7 @@ var burned_items: int = 0 #burned items since last check. If no burned items fir
 
 func _ready() -> void:
 	world_rect = Settings.get_world_rect()
+	set_collision_mask_value(Global.Layer.WATER, true)
 	Events.fire_quench_command.connect(on_fire_quench)
 	Events.burn_processed.connect(on_burn_processed)
 	move()

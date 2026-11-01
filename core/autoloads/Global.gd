@@ -1,5 +1,13 @@
 extends Node
 
+const GROWN_TREES_GROUP: = &"grown_trees"
+const LIVING_TREES_GROUP: = &"living_trees" # Grown trees and saplings
+
+enum LoseReason {
+	PLAYER_BURNED, # Also the index of its message on the lose screen
+	FOREST_BURNED
+}
+
 enum Layer {
 	OBSTACLE = 1, #stones, water, etc. Can't be burn
 	FIREABLE = 2, #items, trees, user and other object what can be burn

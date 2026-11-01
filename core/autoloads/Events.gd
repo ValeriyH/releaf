@@ -23,4 +23,7 @@ signal fire_quench_processed(result: FireQuenchCommand)
 
 #Event signals
 signal player_state_changed(player: Player)
+signal tree_grown
+signal game_won
+signal game_lost(reason: Global.LoseReason)
 @warning_ignore_restore("unused_signal")

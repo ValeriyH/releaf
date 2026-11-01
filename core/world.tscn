@@ -30,8 +30,9 @@ shader_parameter/noise_scale = Vector2(4, 4)
 [node name="World" type="Node2D" unique_id=1108878015]
 script = ExtResource("1_wd0q5")
 
-[node name="Player" parent="." unique_id=1758493109 instance=ExtResource("1_5jv1i")]
+[node name="Player" parent="." unique_id=1758493109 node_paths=PackedStringArray("background") instance=ExtResource("1_5jv1i")]
 position = Vector2(-45, 12)
+background = NodePath("../Background")
 
 [node name="Enemies" type="Node2D" parent="." unique_id=825268297]
 

@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://hdwdfx72whs2" path="res://objects/player/player.gd" id="1_ssrue"]
 [ext_resource type="Texture2D" uid="uid://dnt13iy3bhjcf" path="res://objects/player/player.png" id="2_g7ett"]
 [ext_resource type="Texture2D" path="res://objects/item/res/extinguisher_v2.png" id="3_ssrue"]
+[ext_resource type="Shader" path="res://objects/player/player.gdshader" id="4_shader"]
+[ext_resource type="Script" path="res://objects/player/water_ripples.gd" id="5_ripples"]
+[ext_resource type="Script" path="res://objects/player/tank_bar.gd" id="6_tank_bar"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g7ett"]
 
@@ -76,6 +79,9 @@ fill_to = Vector2(1, 1)
 [sub_resource type="Gradient" id="Gradient_jnjyq"]
 colors = PackedColorArray(0.5529412, 0.84313726, 0.98039216, 1, 1, 1, 1, 0)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sink"]
+shader = ExtResource("4_shader")
+
 [node name="Player" type="CharacterBody2D" unique_id=98190796]
 z_index = 1
 collision_layer = 3
@@ -88,7 +94,18 @@ zoom = Vector2(2, 2)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=272593210]
 shape = SubResource("CircleShape2D_g7ett")
 
+[node name="WaterRipples" type="Node2D" parent="." unique_id=2024261282]
+z_as_relative = false
+script = ExtResource("5_ripples")
+
+[node name="TankBar" type="Node2D" parent="." unique_id=2024261283]
+visible = false
+z_index = 3
+position = Vector2(0, -26)
+script = ExtResource("6_tank_bar")
+
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2024261281]
+material = SubResource("ShaderMaterial_sink")
 position = Vector2(1, -4)
 sprite_frames = SubResource("SpriteFrames_xgwla")
 animation = &"move"

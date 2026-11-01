@@ -6,6 +6,8 @@
 - **Ask the user** if [PROJECT.md](Project.md) needs updating and what is planning update.
 - Be concise: in replies and in docs/comments, state only what an agent can't infer on its own. No rationale or filler.
 - **Agents never change git state** (commit, push, merge, branches) without an explicit request from the user. Leave changes uncommitted in the working tree.
+- **A question is a question, not a task.** When the user asks whether something is possible, answer whether it is and what the limits are, and change nothing.
+- **Ask before reverting or restoring anything** (files, moves, deleted code), and don't suggest undoing the user's changes as a default: an unexpected change is probably deliberate.
 
 # References
 

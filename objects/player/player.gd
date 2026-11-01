@@ -2,6 +2,10 @@ extends CharacterBody2D
 class_name Player
 
 const TURN_THRESHOLD: = 0.15
+const SINK_PIXELS: = 7.0
+const SINK_SECONDS: = 0.15
+
+@export var background: Background
 
 var base_speed: = 200
 var direction: Vector2 = Vector2()
@@ -10,10 +14,17 @@ var selected_tool: PlayerTool.Type = PlayerTool.Type.Extinguisher:
 		selected_tool = value
 		$Direction/ActionBox/Sprite2D.texture = PlayerTool.TEXTURES[value]
 
-var health: float = Settings.MAX_HEALTH
+var health: float = Settings.max_health
 var tank: = 1.0 # Extinguisher charge, 0..1
 var refilling: = false
 var stock: Dictionary = Settings.STOCK_START.duplicate()
+var tool_over_water: = false # Trees can't be planted there
+var submerged: = false
+var sink: = 0.0
+var sink_tween: Tween
+
+@onready var sprite_y: float = $Sprite.position.y
+@onready var tank_bar_y: float = $TankBar.position.y
 
 var fire_tween: Tween
 
@@ -43,7 +54,7 @@ func _input(event: InputEvent) -> void:
 func can_act() -> bool:
 	match selected_tool:
 		PlayerTool.Type.Shovel:
-			return stock[Item.Type.Seed] > 0
+			return stock[Item.Type.Seed] > 0 and not tool_over_water
 		PlayerTool.Type.Extinguisher:
 			return tank > 0.0 and not refilling
 	return false
@@ -51,6 +62,13 @@ func can_act() -> bool:
 
 # Input is polled: the virtual joystick changes action state without sending input events
 func _physics_process(delta: float) -> void:
+	var over_water: = background.is_water($Direction/ActionBox/Sprite2D.global_position)
+	if over_water != tool_over_water:
+		tool_over_water = over_water
+		Events.player_state_changed.emit(self)
+	if on_water() != submerged:
+		set_submerged(not submerged)
+
 	var spraying: = selected_tool == PlayerTool.Type.Extinguisher and can_act() and Input.is_action_pressed("ui_accept")
 	$Direction/HitBox.visible = spraying
 	$Direction/HitBox.monitoring = spraying
@@ -74,20 +92,44 @@ func _physics_process(delta: float) -> void:
 
 	velocity = direction * base_speed
 	move_and_slide()
+	$WaterRipples.moving = not direction.is_zero_approx()
+
+func set_submerged(value: bool) -> void:
+	submerged = value
+	$WaterRipples.active = value
+	if sink_tween:
+		sink_tween.kill()
+	sink_tween = create_tween()
+	sink_tween.tween_method(set_sink, sink, SINK_PIXELS if value else 0.0, SINK_SECONDS)
+
+func set_sink(value: float) -> void:
+	sink = value
+	$Sprite.position.y = sprite_y + value
+	$TankBar.position.y = tank_bar_y + value
+	$Sprite.material.set_shader_parameter("sink", value)
 
 func update_tank(spraying: bool, delta: float) -> void:
 	if refilling:
 		tank = move_toward(tank, 1.0, delta / Settings.TANK_REFILL_SECONDS)
 		refilling = tank < 1.0
 		Events.player_state_changed.emit(self)
+	elif on_water():
+		# Wins over spraying: draining here too would make the spray flicker at an empty tank
+		if tank < 1.0:
+			tank = move_toward(tank, 1.0, delta / Settings.TANK_WATER_REFILL_SECONDS)
+			Events.player_state_changed.emit(self)
 	elif spraying:
-		tank = move_toward(tank, 0.0, delta / Settings.TANK_SPRAY_SECONDS)
+		tank = move_toward(tank, 0.0, delta / Settings.tank_spray_seconds)
 		Events.player_state_changed.emit(self)
 		use_supplies()
+	$TankBar.update_level(tank, tank < 1.0 and (refilling or submerged))
+
+func on_water() -> bool:
+	return background.is_water(global_position)
 
 ## Items work on their own: whatever is in stock and needed right now gets used
 func use_supplies() -> void:
-	if tank <= 0.0 and not refilling and stock[Item.Type.Refill] > 0:
+	if tank <= 0.0 and not refilling and stock[Item.Type.Refill] > 0 and not on_water():
 		UseItemCommand.new(self, Item.Type.Refill).send()
 	if health <= Settings.MEDKIT_USE_AT and stock[Item.Type.Medkit] > 0:
 		UseItemCommand.new(self, Item.Type.Medkit).send()
@@ -100,7 +142,7 @@ func on_use_item(cmd: UseItemCommand) -> void:
 		Item.Type.Refill:
 			refilling = true
 		Item.Type.Medkit:
-			health = minf(health + Settings.MEDKIT_HEAL, Settings.MAX_HEALTH)
+			health = minf(health + Settings.MEDKIT_HEAL, Settings.max_health)
 	cmd.set_completed()
 	Events.player_state_changed.emit(self)
 	pick_items_in_reach.call_deferred()
@@ -150,9 +192,12 @@ func on_burn(cmd: BurnCommand) -> void:
 
 func burn_while_inside(fire: Node) -> void:
 	while is_instance_valid(fire) and fire.get_node("Hitbox").get_overlapping_bodies().has(self):
-		health = maxf(health - Settings.BURN_DAMAGE, Settings.MIN_HEALTH)
+		health = maxf(health - Settings.BURN_DAMAGE, 0.0)
 		Events.player_state_changed.emit(self)
 		use_supplies()
+		if health <= 0.0:
+			Events.game_lost.emit(Global.LoseReason.PLAYER_BURNED)
+			return
 		await get_tree().create_timer(1, false).timeout
 
 func on_plant_tree(cmd: PlantTreeCommand) -> void:

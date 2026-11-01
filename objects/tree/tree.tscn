@@ -62,3 +62,8 @@ initial_velocity_min = 40.0
 initial_velocity_max = 80.0
 scale_amount_curve = SubResource("Curve_albtw")
 color_ramp = SubResource("Gradient_jc7sr")
+
+[node name="FruitTimer" type="Timer" parent="." unique_id=1093218874]
+one_shot = true
+
+[connection signal="timeout" from="FruitTimer" to="." method="on_fruit_timer_timeout"]
